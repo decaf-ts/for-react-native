@@ -27,6 +27,10 @@ module.exports = function(api) {
         root: ["./"],
         alias: {
           "@": "./",
+          "@app": "./src/app",
+          "@components": "./src/components",
+          "@constants": "./src/constants",
+          "@hooks": "./src/hooks",
           "tailwind.config": "./tailwind.config.js",
           ...resolveDecafAliases(),
         },

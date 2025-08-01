@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, View } from "react-native";
 import Gradient from "@/assets/Icons/Gradient";
-import { Box } from "@/components/ui/box";
-import { Text } from "@/components/ui/text";
+import { Box } from "@components/ui/box";
+import { Text } from "@components/ui/text";
 import { Link } from "expo-router";
 
 export default function Home() {
