@@ -16,8 +16,8 @@ function resolveAlias(alias) {
 	return Object.fromEntries(
 		fs
 			.readdirSync(basePath)
-			.filter((name) => fs.existsSync(path.join(basePath, name, "lib", "esm")))
-			.map((name) => [`${alias}/${name}`, path.join(basePath, name, "lib", "esm")])
+			.filter((name) => fs.existsSync(path.join(basePath, name, "lib")))
+			.map((name) => [`${alias}/${name}`, path.join(basePath, name, "lib", "index.cjs")])
 	);
 }
 
@@ -26,6 +26,7 @@ module.exports = function (api) {
 
 	return {
 		presets: [["babel-preset-expo", { jsxImportSource: "nativewind" }], "nativewind/babel"],
+		sourceMaps: true,
 		plugins: [
 			[
 				"module-resolver",
@@ -43,6 +44,8 @@ module.exports = function (api) {
 					},
 				},
 			],
+			["@babel/plugin-proposal-decorators", { legacy: true }],
+			["@babel/plugin-proposal-class-properties", { loose: true }],
 			"@babel/plugin-transform-class-static-block",
 		],
 	};
