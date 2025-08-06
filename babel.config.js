@@ -1,14 +1,23 @@
 const path = require("path");
 const fs = require("fs");
 
-function resolveDecafAliases() {
-	const basePath = path.join(__dirname, "node_modules", "@decaf-ts");
+function resolveAlias(alias) {
+	const basePath = path.join(__dirname, "node_modules", alias);
+	const isSingleLib =
+		fs.existsSync(path.join(basePath, "package.json")) &&
+		fs.existsSync(path.join(basePath, "lib", "esm"));
+
+	if (isSingleLib) {
+		return {
+			[alias]: path.join(basePath, "lib", "esm"),
+		};
+	}
 
 	return Object.fromEntries(
 		fs
 			.readdirSync(basePath)
 			.filter((name) => fs.existsSync(path.join(basePath, name, "lib", "esm")))
-			.map((name) => [`@decaf-ts/${name}`, path.join(basePath, name, "lib", "esm")])
+			.map((name) => [`${alias}/${name}`, path.join(basePath, name, "lib", "esm")])
 	);
 }
 
@@ -29,7 +38,8 @@ module.exports = function (api) {
 						"@constants": "./src/constants",
 						"@hooks": "./src/hooks",
 						"tailwind.config": "./tailwind.config.js",
-						...resolveDecafAliases(),
+						...resolveAlias("typed-object-accumulator"),
+						...resolveAlias("@decaf-ts"),
 					},
 				},
 			],
