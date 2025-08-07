@@ -1,12 +1,18 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,        /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+    "target": "ESNext",
+    "module": "ESNext",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": false,
+    "strict": true,
+    "jsx": "react-native",
+    "allowSyntheticDefaultImports": true,
     "strictPropertyInitialization": true, // default true
     "skipLibCheck": true,
     "noImplicitReturns": false, // default true
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "resolveJsonModule": true,
@@ -14,8 +20,6 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "paths": {
       "@/*": [
         "./*"

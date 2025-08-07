@@ -28,6 +28,10 @@ module.exports = function (api) {
 		presets: [["babel-preset-expo", { jsxImportSource: "nativewind" }], "nativewind/babel"],
 		sourceMaps: true,
 		plugins: [
+			["@babel/plugin-proposal-decorators", { legacy: true }],
+			["@babel/plugin-proposal-class-properties", { loose: true }],
+			// ["@babel/plugin-transform-typescript", { allowDeclareFields: true }],
+			"@babel/plugin-transform-class-static-block",
 			[
 				"module-resolver",
 				{
@@ -44,9 +48,6 @@ module.exports = function (api) {
 					},
 				},
 			],
-			["@babel/plugin-proposal-decorators", { legacy: true }],
-			["@babel/plugin-proposal-class-properties", { loose: true }],
-			"@babel/plugin-transform-class-static-block",
 		],
 	};
 };
