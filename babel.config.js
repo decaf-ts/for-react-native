@@ -30,7 +30,11 @@ module.exports = function (api) {
 		plugins: [
 			["@babel/plugin-proposal-decorators", { legacy: true }],
 			["@babel/plugin-proposal-class-properties", { loose: true }],
-			// ["@babel/plugin-transform-typescript", { allowDeclareFields: true }],
+			"babel-plugin-transform-typescript-metadata",
+			// [
+			// 	"@babel/plugin-transform-typescript",
+			// 	{ allowDeclareFields: true, disallowAmbiguousJSXLike: true },
+			// ],
 			"@babel/plugin-transform-class-static-block",
 			[
 				"module-resolver",
