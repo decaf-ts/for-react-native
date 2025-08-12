@@ -1,9 +1,9 @@
 import React from "react";
 import { Model } from "@decaf-ts/decorator-validation";
-import { RenderingEngine } from "@decaf-ts/ui-decorators";
+import { FieldDefinition, RenderingEngine } from "@decaf-ts/ui-decorators";
 import { ComponentRegistry } from "@/src/engine/ComponentRegistry";
 
-export class ReactNativeRenderingEngine extends RenderingEngine {
+export class RnRenderingEngine extends RenderingEngine {
 	private _model!: Model;
 
 	constructor() {
@@ -15,22 +15,21 @@ export class ReactNativeRenderingEngine extends RenderingEngine {
 		this.initialized = true;
 	}
 
-	private fromFieldDefinition(node: any): React.ReactNode {
-		const Component = ComponentRegistry.get(node.tag);
+	private fromFieldDefinition(def: FieldDefinition): React.ReactNode {
+		const { tag, rendererId, props, children } = def;
+		const Component = ComponentRegistry.get(tag);
 		if (!Component) {
-			console.warn(`Componente não encontrado para tag: ${node.tag}`);
+			console.warn(`Component ${def.tag} not found`);
 			return null;
 		}
 
-		const children = node.children?.map((child: any, i: number) =>
-			this.fromFieldDefinition({ ...child, key: i })
+		const childrenComponents = children?.map((child, i) =>
+			this.fromFieldDefinition({ ...child, rendererId: child.rendererId || `${rendererId}-${i}` })
 		);
 
-		console.log("render=", node.props);
-
 		return (
-			<Component key={node.key} {...node.props} {...node.item}>
-				{children}
+			<Component key={def.rendererId} {...(props as Record<string, any>)}>
+				{childrenComponents}
 			</Component>
 		);
 	}

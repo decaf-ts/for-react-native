@@ -1,4 +1,3 @@
-export * from "./CategoryModel";
-export * from "./DemoModel";
-export * from "./EmployeeModel";
-export * from "./UserModel";
+export * from "./AddressModel";
+export * from "./UserProfileModel";
+export * from "./ProfessionalInfoModel";

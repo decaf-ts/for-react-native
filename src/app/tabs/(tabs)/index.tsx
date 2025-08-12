@@ -2,26 +2,54 @@ import "reflect-metadata";
 import { Center } from "@components/ui/center";
 import { Divider } from "@components/ui/divider";
 import { Heading } from "@components/ui/heading";
-import { ComponentRegistry, ReactNativeRenderingEngine } from "@/src/engine";
+import { ComponentRegistry, RnRenderingEngine } from "@/src/engine";
 import { RnDecafCrudForm } from "@components/decaf/RnDecafCrudForm";
 import { RnDecafCrudField } from "@components/decaf/RnDecafCrudField";
-import { DemoModel } from "@/src/models/DemoModel";
+import { ScrollView } from "react-native";
+import { UserProfileModel } from "@/src/models/UserProfileModel";
+import { RnFieldset } from "@components/decaf/RnFieldset";
 
-const renderingEngine = new ReactNativeRenderingEngine();
-const model = new DemoModel({
-	id: 1,
-	name: "John Doe",
-	// birthdate: '1989-12-12',
-	email: "john.doe@example.com",
-	website: "https://johndoe.example.com",
-	password: "password123",
-	category: {
-		name: "Demo Category",
-		description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+const renderingEngine = new RnRenderingEngine();
+
+const model = new UserProfileModel({
+	fullName: "John Smith",
+	birthDate: "1985-05-15",
+	email: "john.smith@example.com",
+	password: "SecurePassword123!",
+	phone: "(11) 98765-4321",
+	gender: "female",
+
+	address: {
+		street: "Main Street",
+		number: "100",
+		complement: "Apt 101",
+		zipCode: "12345-000",
+		city: "New York",
+		state: "NY",
 	},
-	user: { username: "Admin", secret: "DemoPass" },
-	gender: "male",
-	birthdate: "1989-12-12",
+
+	professionalInfo: {
+		position: "manager",
+		specialization: "mobile",
+		company: "Tech Solutions Inc.",
+		jobDescription: "Managing development teams",
+
+		companyAddress: {
+			street: "Business Avenue",
+			number: "500",
+			zipCode: "12345-001",
+			city: "New York",
+			state: "NY",
+		},
+	},
+
+	preferences: {
+		emailNotifications: true,
+		theme: "dark",
+		language: "en",
+	},
+
+	acceptTerms: true,
 });
 
 // import "@components/NgxDecafCrudForm";
@@ -29,27 +57,16 @@ const model = new DemoModel({
 
 ComponentRegistry.register("ngx-decaf-crud-form", RnDecafCrudForm);
 ComponentRegistry.register("ngx-decaf-crud-field", RnDecafCrudField);
-
-// export default function Home() {
-// 	const render = renderingEngine.render(model);
-//
-// 	return (
-// 		<Center className="flex-1">
-// 			<Heading className="font-bold text-2xl">Example</Heading>
-// 			<Divider className="my-[30px] w-[80%]" />
-// 			<Text className="p-4">Tabs example for-react-native.</Text>
-// 			<EditScreenInfo path="app/(app)/(tabs)/index.tsx" />
-// 			<Center className="flex-1">{renderingEngine.render(model)}</Center>
-// 		</Center>
-// 	);
-// }
+ComponentRegistry.register("ngx-decaf-fieldset", RnFieldset);
 
 export default function Home() {
 	return (
-		<Center>
-			<Heading>Example</Heading>
-			<Divider />
-			{renderingEngine.render(model)}
-		</Center>
+		<ScrollView>
+			<Center>
+				<Heading>Example</Heading>
+				<Divider />
+				{renderingEngine.render(model)}
+			</Center>
+		</ScrollView>
 	);
 }

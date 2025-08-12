@@ -1,2 +1,2 @@
 export * from "./ComponentRegistry";
-export * from "./RenderingEngine";
+export * from "./RnRenderingEngine";
