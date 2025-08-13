@@ -10,33 +10,44 @@ interface FieldsetProps {
 
 export function RnFieldset({ name, children }: FieldsetProps) {
 	return (
-		<Box style={styles.fieldset}>
-			<Text style={styles.legend}>{name}</Text>
-			<View style={styles.content}>{children}</View>
-		</Box>
+		<View style={styles.wrapper}>
+			{/* Title*/}
+			<View style={styles.legendContainer}>
+				<Text style={styles.legend}>{name}</Text>
+			</View>
+
+			<Box style={styles.fieldset}>
+				<View style={styles.content}>{children}</View>
+			</Box>
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	fieldset: {
+	wrapper: {
 		marginTop: 20,
-		borderWidth: 1,
-		borderColor: "#aaa",
-		borderRadius: 4,
-		padding: 10,
-		paddingTop: 20,
-		marginVertical: 50,
+		position: "relative",
 	},
-	legend: {
+	legendContainer: {
 		position: "absolute",
 		top: -10,
 		left: 10,
-		backgroundColor: "#e5e7eb",
-		paddingHorizontal: 4,
+		backgroundColor: "rgba(0,0,0,0.00)",
+		paddingHorizontal: 8,
+		zIndex: 1,
+	},
+	legend: {
 		fontWeight: "bold",
 		fontSize: 14,
 	},
+	fieldset: {
+		padding: 16,
+		borderWidth: 1,
+		borderColor: "#d1d5db",
+		borderRadius: 8,
+	},
 	content: {
-		marginTop: 5,
+		marginTop: 4,
+		padding: 14,
 	},
 });

@@ -30,6 +30,13 @@ export class UserProfileModel extends Model {
 	birthDate!: Date;
 
 	@required()
+	@uielement("ngx-decaf-crud-field", {
+		label: "Age",
+		type: "range",
+	})
+	age!: number;
+
+	@required()
 	@email()
 	@uielement("ngx-decaf-crud-field", {
 		label: "Email",

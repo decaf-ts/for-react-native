@@ -13,11 +13,12 @@ const renderingEngine = new RnRenderingEngine();
 
 const model = new UserProfileModel({
 	fullName: "John Smith",
+	age: 18,
 	birthDate: "1985-05-15",
 	email: "john.smith@example.com",
-	password: "SecurePassword123!",
+	password: "P@ssw0rd01",
 	phone: "(11) 98765-4321",
-	gender: "female",
+	gender: "male",
 
 	address: {
 		street: "Main Street",
@@ -25,7 +26,7 @@ const model = new UserProfileModel({
 		complement: "Apt 101",
 		zipCode: "12345-000",
 		city: "New York",
-		state: "NY",
+		state: undefined,
 	},
 
 	professionalInfo: {
@@ -39,7 +40,7 @@ const model = new UserProfileModel({
 			number: "500",
 			zipCode: "12345-001",
 			city: "New York",
-			state: "NY",
+			state: undefined,
 		},
 	},
 

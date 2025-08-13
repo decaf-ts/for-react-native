@@ -42,6 +42,16 @@ export class ProfessionalInfoModel extends Model {
 	})
 	jobDescription?: string;
 
+	@uielement("ngx-decaf-crud-field", {
+		label: "Available for",
+		type: "checkbox",
+		options: [
+			{ value: "fulltime", text: "Full-time" },
+			{ value: "parttime", text: "Part-time" },
+		],
+	})
+	availableToJobType?: string;
+
 	@uichild(AddressModel.name, "ngx-decaf-fieldset")
 	companyAddress!: AddressModel;
 

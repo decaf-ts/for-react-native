@@ -15,18 +15,16 @@ export const RnDecafCrudForm: React.FC<RnDecafCrudFormProps> = ({ children, prop
 
 	const isRoot = !parentForm;
 	const methods = useForm({ defaultValues: props?.defaultValues || {} });
-
-	const { register, handleSubmit } = useForm<any>({ defaultValues: {} });
 	const onSubmit: SubmitHandler<any> = (data) => {
 		console.log(data);
 	};
 
 	if (isRoot) {
-		// Form raiz
+		// Root form
 		return (
 			<FormProvider {...methods}>
 				<VStack space="md">
-					{children}
+					<form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
 					<HStack space="sm" style={styles.footer}>
 						<Button style={styles.button} onPress={() => methods.reset()}>
 							<ButtonText>Cancel</ButtonText>
