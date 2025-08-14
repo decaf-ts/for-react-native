@@ -1,6 +1,13 @@
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { FormControl, FormControlLabel, FormControlLabelText } from "@components/ui/form-control";
+import {
+	FormControl,
+	FormControlError,
+	FormControlErrorIcon,
+	FormControlErrorText,
+	FormControlLabel,
+	FormControlLabelText,
+} from "@components/ui/form-control";
 import { VStack } from "@components/ui/vstack";
 import { Input, InputField, InputIcon, InputSlot } from "@components/ui/input";
 import { Textarea, TextareaInput } from "@components/ui/textarea";
@@ -24,7 +31,14 @@ import {
 	SelectPortal,
 	SelectTrigger,
 } from "@components/ui/select";
-import { CheckIcon, ChevronDownIcon, CircleIcon, EyeIcon, EyeOffIcon } from "@components/ui/icon";
+import {
+	AlertCircleIcon,
+	CheckIcon,
+	ChevronDownIcon,
+	CircleIcon,
+	EyeIcon,
+	EyeOffIcon,
+} from "@components/ui/icon";
 import { CrudOperations, OperationKeys } from "@decaf-ts/db-decorators";
 import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@components/ui/slider";
 
@@ -69,26 +83,31 @@ export interface RnDecafCrudFieldProps {
 	variant?: "underlined" | "outline" | "rounded";
 	mask?: string;
 	pattern?: string;
+	validateFn?: (value: any) => string | boolean;
 }
 
-export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = ({
-	operation = OperationKeys.CREATE,
-	type = "text",
-	label,
-	value,
-	required = false,
-	min,
-	max,
-	minlength,
-	maxlength,
-	readonly = false,
-	placeholder,
-	options = [],
-	size = "md",
-	space = "sm",
-	variant = "underlined",
-	...props
-}) => {
+export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
+	fieldProps: RnDecafCrudFieldProps
+) => {
+	const {
+		operation = OperationKeys.CREATE,
+		type = "text",
+		label,
+		value,
+		required = false,
+		min,
+		max,
+		minlength,
+		maxlength,
+		readonly = false,
+		placeholder,
+		options = [],
+		size = "md",
+		space = "sm",
+		variant = "underlined",
+		...props
+	} = fieldProps;
+
 	const { control } = useFormContext();
 	const fieldName = props.path;
 	const readonlyMode = [OperationKeys.READ, OperationKeys.DELETE].includes(operation);
@@ -106,7 +125,12 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = ({
 			control={control}
 			name={fieldName}
 			defaultValue={value}
-			render={({ field }) => {
+			rules={{
+				validate: (value: any) => {
+					return fieldProps.validateFn ? fieldProps.validateFn(value) : true;
+				},
+			}}
+			render={({ field, fieldState }) => {
 				switch (type) {
 					case "textarea":
 						return (
@@ -287,7 +311,11 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = ({
 					default:
 						return (
 							<VStack space={space}>
-								<FormControl isRequired={required} isDisabled={disabled}>
+								<FormControl
+									isRequired={required}
+									isDisabled={disabled}
+									isInvalid={!!fieldState.error}
+								>
 									{renderLabel()}
 									<Input size={size}>
 										<InputField
@@ -298,8 +326,15 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = ({
 											placeholder={placeholder}
 											maxLength={maxlength}
 											onChangeText={field.onChange}
+											onBlur={field.onBlur}
 										/>
 									</Input>
+									<FormControlError>
+										<FormControlErrorIcon as={AlertCircleIcon} />
+										{fieldState.error && (
+											<FormControlErrorText>{fieldState.error.message}</FormControlErrorText>
+										)}
+									</FormControlError>
 								</FormControl>
 							</VStack>
 						);
