@@ -131,57 +131,50 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 				},
 			}}
 			render={({ field, fieldState }) => {
+				console.log("fieldState=", fieldState);
+
+				let component: React.ReactNode = null;
+
 				switch (type) {
 					case "textarea":
-						return (
-							<VStack space={space}>
-								<FormControl isRequired={required} isDisabled={disabled}>
-									{renderLabel()}
-									<Textarea>
-										<TextareaInput
-											value={field.value}
-											onChangeText={field.onChange}
-											placeholder={placeholder}
-											maxLength={maxlength}
-										/>
-									</Textarea>
-								</FormControl>
-							</VStack>
+						component = (
+							<>
+								{renderLabel()}
+								<Textarea>
+									<TextareaInput
+										value={field.value}
+										onChangeText={field.onChange}
+										placeholder={placeholder}
+										maxLength={maxlength}
+									/>
+								</Textarea>
+							</>
 						);
+						break;
 
 					case "checkbox":
 						if (!options?.length) {
-							return (
-								<VStack space={space}>
-									<FormControl isDisabled={disabled}>
-										<Checkbox
-											size={size}
-											isChecked={!!field.value}
-											onChange={(checked) => field.onChange(checked)}
-										>
-											<CheckboxIndicator className="mr-2">
-												<CheckboxIcon as={CheckIcon} />
-											</CheckboxIndicator>
-											<CheckboxLabel aria-label={label}>{label}</CheckboxLabel>
-										</Checkbox>
-									</FormControl>
-								</VStack>
+							component = (
+								<Checkbox
+									size={size}
+									isChecked={!!field.value}
+									onChange={(checked) => field.onChange(checked)}
+								>
+									<CheckboxIndicator className="mr-2">
+										<CheckboxIcon as={CheckIcon} />
+									</CheckboxIndicator>
+									<CheckboxLabel aria-label={label}>{label}</CheckboxLabel>
+								</Checkbox>
 							);
-						}
-
-						return (
-							<VStack space={space}>
-								<FormControl isDisabled={disabled}>
-									{label && (
-										<FormControlLabel>
-											<FormControlLabelText aria-label={label}>{label}</FormControlLabelText>
-										</FormControlLabel>
-									)}
+						} else {
+							component = (
+								<>
+									{renderLabel()}
 									<CheckboxGroup
 										value={field.value || []}
 										onChange={(keys) => field.onChange(keys)}
 									>
-										<VStack space="xl">
+										<VStack space={space}>
 											{options.map((option) => (
 												<Checkbox
 													key={option.value}
@@ -197,95 +190,93 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 											))}
 										</VStack>
 									</CheckboxGroup>
-								</FormControl>
-							</VStack>
-						);
+								</>
+							);
+						}
+						break;
 
 					case "radio":
-						return (
-							<VStack space={space}>
-								<FormControl>
-									{renderLabel()}
-									<RadioGroup value={field.value || value || ""} onChange={field.onChange}>
-										<VStack space={space}>
-											{options.map((option) => (
-												<Radio
-													key={option.value}
-													id={`${fieldName}-${option.value}`}
-													size="sm"
-													value={option.value}
-												>
-													<RadioIndicator>
-														<RadioIcon as={CircleIcon} />
-													</RadioIndicator>
-													<RadioLabel>{option.text}</RadioLabel>
-												</Radio>
-											))}
-										</VStack>
-									</RadioGroup>
-								</FormControl>
-							</VStack>
+						component = (
+							<>
+								{renderLabel()}
+								<RadioGroup value={field.value || value || ""} onChange={field.onChange}>
+									<VStack space={space}>
+										{options.map((option) => (
+											<Radio
+												key={option.value}
+												id={`${fieldName}-${option.value}`}
+												size={size}
+												value={option.value}
+											>
+												<RadioIndicator>
+													<RadioIcon as={CircleIcon} />
+												</RadioIndicator>
+												<RadioLabel>{option.text}</RadioLabel>
+											</Radio>
+										))}
+									</VStack>
+								</RadioGroup>
+							</>
 						);
+						break;
 
 					case "select":
-						return (
-							<VStack space={space}>
-								<FormControl>
-									{renderLabel()}
-									<Select
-										onValueChange={field.onChange}
-										selectedValue={options.find((option) => option.value === value)?.text}
-									>
-										<SelectTrigger variant="outline" size="md">
-											<SelectInput placeholder={placeholder || "Select option"} />
-											<SelectIcon as={ChevronDownIcon} />
-										</SelectTrigger>
-										<SelectPortal>
-											<SelectBackdrop />
-											<SelectContent>
-												<SelectDragIndicatorWrapper>
-													<SelectDragIndicator />
-												</SelectDragIndicatorWrapper>
-												{options.map((option) => (
-													<SelectItem
-														key={option.value}
-														label={option.text}
-														value={option.value}
-														isDisabled={option.disabled}
-													/>
-												))}
-											</SelectContent>
-										</SelectPortal>
-									</Select>
-								</FormControl>
-							</VStack>
+						component = (
+							<>
+								{renderLabel()}
+								<Select
+									onValueChange={field.onChange}
+									selectedValue={options.find((option) => option.value === value)?.text}
+								>
+									<SelectTrigger variant="outline" size={size}>
+										<SelectInput placeholder={placeholder || "Select option"} />
+										<SelectIcon as={ChevronDownIcon} />
+									</SelectTrigger>
+									<SelectPortal>
+										<SelectBackdrop />
+										<SelectContent>
+											<SelectDragIndicatorWrapper>
+												<SelectDragIndicator />
+											</SelectDragIndicatorWrapper>
+											{options.map((option) => (
+												<SelectItem
+													key={option.value}
+													label={option.text}
+													value={option.value}
+													isDisabled={option.disabled}
+												/>
+											))}
+										</SelectContent>
+									</SelectPortal>
+								</Select>
+							</>
 						);
+						break;
 
 					case "range":
-						return (
-							<VStack space={space}>
-								<FormControl isRequired={required} isDisabled={disabled}>
-									{renderLabel()}
-									<Slider
-										minValue={min || 0}
-										maxValue={max || 100}
-										step={1}
-										value={field.value}
-										onChange={field.onChange}
-										isDisabled={disabled}
-									>
-										<SliderTrack>
-											<SliderFilledTrack />
-										</SliderTrack>
-										<SliderThumb />
-									</Slider>
-								</FormControl>
-							</VStack>
+						component = (
+							<>
+								{renderLabel()}
+								<Slider
+									minValue={min || 0}
+									maxValue={max || 100}
+									step={1}
+									value={field.value}
+									onChange={field.onChange}
+									isDisabled={disabled}
+								>
+									<SliderTrack>
+										<SliderFilledTrack />
+									</SliderTrack>
+									<SliderThumb />
+								</Slider>
+							</>
 						);
+						break;
 
 					case "password":
 						const [showPassword, setShowPassword] = React.useState(false);
-						return (
+						component = (
 							<VStack space={space}>
 								<FormControl isRequired={required} isDisabled={disabled}>
 									{renderLabel()}
@@ -304,41 +295,46 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 								</FormControl>
 							</VStack>
 						);
+						break;
 
 					case "date":
-						return "";
+						component = "";
+						break;
 
 					default:
-						return (
-							<VStack space={space}>
-								<FormControl
-									isRequired={required}
-									isDisabled={disabled}
-									isInvalid={!!fieldState.error}
-								>
-									{renderLabel()}
-									<Input size={size}>
-										<InputField
-											type="text" // {type}
-											variant={variant}
-											keyboardType={type === "number" ? "numeric" : "default"}
-											value={field.value}
-											placeholder={placeholder}
-											maxLength={maxlength}
-											onChangeText={field.onChange}
-											onBlur={field.onBlur}
-										/>
-									</Input>
-									<FormControlError>
-										<FormControlErrorIcon as={AlertCircleIcon} />
-										{fieldState.error && (
-											<FormControlErrorText>{fieldState.error.message}</FormControlErrorText>
-										)}
-									</FormControlError>
-								</FormControl>
-							</VStack>
+						component = (
+							<>
+								{renderLabel()}
+								<Input size={size}>
+									<InputField
+										type="text" // {type}
+										variant={variant}
+										keyboardType={type === "number" ? "numeric" : "default"}
+										value={field.value}
+										placeholder={placeholder}
+										maxLength={maxlength}
+										onChangeText={field.onChange}
+										onBlur={field.onBlur}
+									/>
+								</Input>
+							</>
 						);
+						break;
 				}
+
+				return (
+					<VStack space={space}>
+						<FormControl isRequired={required} isDisabled={disabled} isInvalid={!!fieldState.error}>
+							{component}
+							<FormControlError>
+								<FormControlErrorIcon as={AlertCircleIcon} />
+								{fieldState.error && (
+									<FormControlErrorText>{fieldState.error.message}</FormControlErrorText>
+								)}
+							</FormControlError>
+						</FormControl>
+					</VStack>
+				);
 			}}
 		/>
 	);

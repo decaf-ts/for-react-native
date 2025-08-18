@@ -7,6 +7,9 @@ import {
 	password,
 	pattern,
 	required,
+	minlength,
+	maxlength,
+	min,
 } from "@decaf-ts/decorator-validation";
 import { uichild, uielement, uimodel } from "@decaf-ts/ui-decorators";
 import { ProfessionalInfoModel } from "./ProfessionalInfoModel";
@@ -16,6 +19,8 @@ import { AddressModel } from "./AddressModel";
 @model()
 export class UserProfileModel extends Model {
 	@required()
+	@minlength(5)
+	@maxlength(36)
 	@uielement("ngx-decaf-crud-field", {
 		label: "Full Name",
 	})
@@ -25,14 +30,15 @@ export class UserProfileModel extends Model {
 	@date("yyyy-MM-dd")
 	@uielement("ngx-decaf-crud-field", {
 		label: "Birth Date",
-		type: "range",
+		displayType: "range",
 	})
 	birthDate!: Date;
 
 	@required()
+	@min(20)
 	@uielement("ngx-decaf-crud-field", {
 		label: "Age",
-		type: "range",
+		displayType: "range",
 	})
 	age!: number;
 
@@ -56,7 +62,6 @@ export class UserProfileModel extends Model {
 	@pattern(/^\(\d{2}\) \d{4,5}-\d{4}$/)
 	@uielement("ngx-decaf-crud-field", {
 		label: "Phone",
-		mask: "(00) 00000-0000",
 	})
 	phone!: string;
 
@@ -80,7 +85,7 @@ export class UserProfileModel extends Model {
 	@required()
 	@uielement("ngx-decaf-crud-field", {
 		label: "Accept terms and conditions",
-		type: "checkbox",
+		displayType: "checkbox",
 	})
 	acceptTerms!: boolean;
 

@@ -48,6 +48,7 @@ export class RnRenderingEngine extends RenderingEngine {
 	render<M extends Model>(model: M, globalProps: Record<string, unknown> = {}): any {
 		try {
 			const def = this.toFieldDefinition(model, globalProps);
+			console.log("DEF=", def);
 			return this.fromFieldDefinition(def);
 		} catch (e: unknown) {
 			throw new Error(`Failed to render Model ${model.constructor.name}: ${e}`);

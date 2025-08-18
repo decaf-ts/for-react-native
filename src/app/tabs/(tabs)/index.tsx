@@ -19,10 +19,9 @@ const model = new UserProfileModel({
 	password: "P@ssw0rd01",
 	phone: "(11) 98765-4321",
 	gender: "male",
-
 	address: {
 		street: "Main Street",
-		number: "100",
+		// number: "100",
 		complement: "Apt 101",
 		zipCode: "12345-000",
 		city: "New York",
@@ -38,7 +37,7 @@ const model = new UserProfileModel({
 		companyAddress: {
 			street: "Business Avenue",
 			number: "500",
-			zipCode: "12345-001",
+			// zipCode: "12345-001",
 			city: "New York",
 			state: undefined,
 		},
