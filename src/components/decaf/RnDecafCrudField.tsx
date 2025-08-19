@@ -159,6 +159,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 									size={size}
 									isChecked={!!field.value}
 									onChange={(checked) => field.onChange(checked)}
+									value=""
 								>
 									<CheckboxIndicator className="mr-2">
 										<CheckboxIcon as={CheckIcon} />

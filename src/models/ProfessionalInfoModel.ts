@@ -18,6 +18,7 @@ export class ProfessionalInfoModel extends Model {
 	})
 	position!: string;
 
+	@required()
 	@uielement("ngx-decaf-crud-field", {
 		label: "Specialization",
 		type: "radio",

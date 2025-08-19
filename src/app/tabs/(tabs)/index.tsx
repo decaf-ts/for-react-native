@@ -30,7 +30,7 @@ const model = new UserProfileModel({
 
 	professionalInfo: {
 		position: "manager",
-		specialization: "mobile",
+		// specialization: "mobile",
 		company: "Tech Solutions Inc.",
 		jobDescription: "Managing development teams",
 
