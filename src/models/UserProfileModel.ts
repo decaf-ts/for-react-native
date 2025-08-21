@@ -30,7 +30,6 @@ export class UserProfileModel extends Model {
 	@date("yyyy-MM-dd")
 	@uielement("ngx-decaf-crud-field", {
 		label: "Birth Date",
-		displayType: "range",
 	})
 	birthDate!: Date;
 
@@ -38,7 +37,7 @@ export class UserProfileModel extends Model {
 	@min(20)
 	@uielement("ngx-decaf-crud-field", {
 		label: "Age",
-		displayType: "range",
+		inputType: "range",
 	})
 	age!: number;
 
@@ -54,7 +53,7 @@ export class UserProfileModel extends Model {
 	@password()
 	@uielement("ngx-decaf-crud-field", {
 		label: "Password",
-		type: "password",
+		inputType: "password",
 	})
 	password!: string;
 
@@ -68,7 +67,7 @@ export class UserProfileModel extends Model {
 	@required()
 	@uielement("ngx-decaf-crud-field", {
 		label: "Gender",
-		type: "radio",
+		inputType: "radio",
 		options: [
 			{ value: "male", text: "Male" },
 			{ value: "female", text: "Female" },
@@ -85,7 +84,7 @@ export class UserProfileModel extends Model {
 	@required()
 	@uielement("ngx-decaf-crud-field", {
 		label: "Accept terms and conditions",
-		displayType: "checkbox",
+		inputType: "checkbox",
 	})
 	acceptTerms!: boolean;
 

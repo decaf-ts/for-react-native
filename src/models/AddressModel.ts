@@ -25,7 +25,6 @@ export class AddressModel extends Model {
 	@required()
 	@uielement("ngx-decaf-crud-field", {
 		label: "ZIP Code",
-		mask: "00000-000",
 	})
 	zipCode!: string;
 
@@ -38,7 +37,7 @@ export class AddressModel extends Model {
 	@required()
 	@uielement("ngx-decaf-crud-field", {
 		label: "State",
-		type: "select",
+		inputType: "select",
 		options: [
 			{ value: "MH", text: "Maharashtra" },
 			{ value: "BV", text: "Bavaria" },

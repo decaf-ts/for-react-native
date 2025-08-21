@@ -67,7 +67,8 @@ export interface RnDecafCrudFieldProps {
 	name: string;
 	path: string;
 	childOf?: string;
-	type?: PossibleInputTypes;
+	type: string;
+	inputType?: PossibleInputTypes;
 	label?: string;
 	value?: any;
 	required?: boolean;
@@ -91,7 +92,8 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 ) => {
 	const {
 		operation = OperationKeys.CREATE,
-		type = "text",
+		type,
+		inputType: originalInputType = "text",
 		label,
 		value,
 		required = false,
@@ -112,6 +114,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 	const fieldName = props.path;
 	const readonlyMode = [OperationKeys.READ, OperationKeys.DELETE].includes(operation);
 	const disabled = readonly || readonlyMode;
+	const inputType = ["password", "email", "url"].includes(type) ? type : originalInputType;
 
 	const renderLabel = () =>
 		label && (
@@ -133,7 +136,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 			render={({ field, fieldState }) => {
 				let component: React.ReactNode = null;
 
-				switch (type) {
+				switch (inputType) {
 					case "textarea":
 						component = (
 							<>

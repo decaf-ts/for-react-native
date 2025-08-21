@@ -8,20 +8,20 @@ export class ProfessionalInfoModel extends Model {
 	@required()
 	@uielement("ngx-decaf-crud-field", {
 		label: "Position",
-		type: "select",
+		inputType: "select",
 		options: [
-			{ value: "dev", text: "Developer" },
-			{ value: "manager", text: "Manager" },
-			{ value: "designer", text: "Designer" },
-			{ value: "other", text: "Other" },
+			{ value: 1, text: "Developer" },
+			{ value: 2, text: "Manager" },
+			{ value: 3, text: "Designer" },
+			{ value: 0, text: "Other" },
 		],
 	})
-	position!: string;
+	position!: number;
 
 	@required()
 	@uielement("ngx-decaf-crud-field", {
 		label: "Specialization",
-		type: "radio",
+		inputType: "radio",
 		options: [
 			{ value: "frontend", text: "Front-end" },
 			{ value: "backend", text: "Back-end" },
@@ -39,13 +39,13 @@ export class ProfessionalInfoModel extends Model {
 
 	@uielement("ngx-decaf-crud-field", {
 		label: "Job Description",
-		type: "textarea",
+		inputType: "textarea",
 	})
 	jobDescription?: string;
 
 	@uielement("ngx-decaf-crud-field", {
 		label: "Available for",
-		type: "checkbox",
+		inputType: "checkbox",
 		options: [
 			{ value: "fulltime", text: "Full-time" },
 			{ value: "parttime", text: "Part-time" },

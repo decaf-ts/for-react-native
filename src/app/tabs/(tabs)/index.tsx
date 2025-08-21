@@ -8,6 +8,7 @@ import { RnDecafCrudField } from "@components/decaf/RnDecafCrudField";
 import { ScrollView } from "react-native";
 import { UserProfileModel } from "@/src/models/UserProfileModel";
 import { RnFieldset } from "@components/decaf/RnFieldset";
+import { ProfessionalInfoModel } from "@/src/models";
 
 const renderingEngine = new RnRenderingEngine();
 
@@ -28,20 +29,20 @@ const model = new UserProfileModel({
 		state: undefined,
 	},
 
-	professionalInfo: {
-		position: "manager",
+	professionalInfo: new ProfessionalInfoModel({
+		position: 3,
 		// specialization: "mobile",
 		company: "Tech Solutions Inc.",
 		jobDescription: "Managing development teams",
 
 		companyAddress: {
 			street: "Business Avenue",
-			number: "500",
+			number: 500,
 			// zipCode: "12345-001",
 			city: "New York",
-			state: undefined,
-		},
-	},
+			// state: undefined,
+		} as any,
+	}),
 
 	preferences: {
 		emailNotifications: true,
