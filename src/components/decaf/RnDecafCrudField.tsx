@@ -124,15 +124,13 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 		<Controller
 			control={control}
 			name={fieldName}
-			defaultValue={value}
+			defaultValue={value || ""}
 			rules={{
 				validate: (value: any) => {
 					return fieldProps.validateFn ? fieldProps.validateFn(value) : true;
 				},
 			}}
 			render={({ field, fieldState }) => {
-				console.log("fieldState=", fieldState);
-
 				let component: React.ReactNode = null;
 
 				switch (type) {
@@ -200,7 +198,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 						component = (
 							<>
 								{renderLabel()}
-								<RadioGroup value={field.value || value || ""} onChange={field.onChange}>
+								<RadioGroup value={field.value} onChange={field.onChange}>
 									<VStack space={space}>
 										{options.map((option) => (
 											<Radio
@@ -278,28 +276,26 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 					case "password":
 						const [showPassword, setShowPassword] = React.useState(false);
 						component = (
-							<VStack space={space}>
-								<FormControl isRequired={required} isDisabled={disabled}>
-									{renderLabel()}
-									<Input size={size}>
-										<InputField
-											type={showPassword ? "text" : "password"}
-											value={field.value}
-											placeholder={placeholder}
-											maxLength={maxlength}
-											onChangeText={field.onChange}
-										/>
-										<InputSlot className="pr-3" onPress={() => setShowPassword((prev) => !prev)}>
-											<InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
-										</InputSlot>
-									</Input>
-								</FormControl>
-							</VStack>
+							<>
+								{renderLabel()}
+								<Input size={size}>
+									<InputField
+										type={showPassword ? "text" : "password"}
+										value={field.value}
+										placeholder={placeholder}
+										maxLength={maxlength}
+										onChangeText={field.onChange}
+									/>
+									<InputSlot className="pr-3" onPress={() => setShowPassword((prev) => !prev)}>
+										<InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
+									</InputSlot>
+								</Input>
+							</>
 						);
 						break;
 
 					case "date":
-						component = "";
+						component = null;
 						break;
 
 					default:

@@ -2,7 +2,7 @@ import React from "react";
 import { Model } from "@decaf-ts/decorator-validation";
 import { FieldDefinition, RenderingEngine } from "@decaf-ts/ui-decorators";
 import { ComponentRegistry } from "@/src/engine/ComponentRegistry";
-import { ValidatorFactory } from "@/src/validation";
+import { ValidatorFactory } from "@/src/engine/validation";
 
 export type RnFieldDefinition = FieldDefinition & {
 	validateFn?: (value: any) => string | undefined;
