@@ -10,6 +10,7 @@ import {
 	minlength,
 	maxlength,
 	min,
+	diff,
 } from "@decaf-ts/decorator-validation";
 import { uichild, uielement, uimodel } from "@decaf-ts/ui-decorators";
 import { ProfessionalInfoModel } from "./ProfessionalInfoModel";
@@ -77,6 +78,13 @@ export class UserProfileModel extends Model {
 
 	@uichild(AddressModel.name, "ngx-decaf-fieldset")
 	address!: AddressModel;
+
+	@required()
+	@diff("../specialization")
+	@uielement("ngx-decaf-crud-field", {
+		label: "Specialization",
+	})
+	specialization?: string = "frontend";
 
 	@uichild(ProfessionalInfoModel.name, "ngx-decaf-fieldset")
 	professionalInfo!: ProfessionalInfoModel;

@@ -1,5 +1,5 @@
 import { uichild, uielement, uimodel } from "@decaf-ts/ui-decorators";
-import { Model, model, required } from "@decaf-ts/decorator-validation";
+import { Model, model, required, diff } from "@decaf-ts/decorator-validation";
 import { AddressModel } from "./AddressModel";
 
 @uimodel("ngx-decaf-crud-form")
@@ -19,6 +19,7 @@ export class ProfessionalInfoModel extends Model {
 	position!: number;
 
 	@required()
+	@diff("../specialization")
 	@uielement("ngx-decaf-crud-field", {
 		label: "Specialization",
 		inputType: "radio",

@@ -51,7 +51,7 @@ function resolveValidatorKeyProps(validatorKey: string, value: unknown, type: st
 }
 
 export class ValidatorFactory {
-	private static createProxy(control: any): PathProxy<unknown> {
+	private static createProxy(control: Record<string, any>): PathProxy<unknown> {
 		return PathProxyEngine.create(control, {
 			getValue(target: any, prop: string): unknown {
 				return (target as any)?.[prop];
