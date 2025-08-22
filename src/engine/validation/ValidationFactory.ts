@@ -1,14 +1,15 @@
 import {
 	ComparisonValidationKeys,
 	DEFAULT_PATTERNS,
+	PathProxy,
+	PathProxyEngine,
 	Validation,
 	ValidationKeys,
 } from "@decaf-ts/decorator-validation";
 import { FieldProperties, HTML5InputTypes, parseValueByType } from "@decaf-ts/ui-decorators";
 import { FieldValues, UseFormGetValues, UseFormReturn } from "react-hook-form";
 
-type ComparisonValidationKey =
-	(typeof ComparisonValidationKeys)[keyof typeof ComparisonValidationKeys];
+type ComparisonValidationKey = (typeof ComparisonValidationKeys)[keyof typeof ComparisonValidationKeys];
 
 export type Validator = (value: any) => true | string | any;
 
@@ -17,7 +18,7 @@ export type ValidatorKeyProps = {
 	props: Record<string, unknown>;
 };
 
-function resolveValidatorKeyProps(key: string, value: unknown, type: string): ValidatorKeyProps {
+function resolveValidatorKeyProps(validatorKey: string, value: unknown, type: string): ValidatorKeyProps {
 	const extraValidators: Record<string, { key: string; value: any }> = {
 		[ValidationKeys.TYPE]: {
 			key: "types",
@@ -37,30 +38,38 @@ function resolveValidatorKeyProps(key: string, value: unknown, type: string): Va
 		},
 	};
 
-	const isTypeBased = key === ValidationKeys.TYPE && !!extraValidators[type];
-	const validatorKey = isTypeBased ? type : key;
+	const isTypeValidator = validatorKey === ValidationKeys.TYPE;
+	const extraValidation = isTypeValidator ? extraValidators[type] || extraValidators[ValidationKeys.TYPE] : undefined;
+	const keyToUse = isTypeValidator ? type : validatorKey;
 
 	const props: Record<string, unknown> = {
-		[validatorKey]: value,
-		...(isTypeBased && {
-			[extraValidators[type].key]: extraValidators[type].value,
-		}),
+		[keyToUse]: value,
+		...(extraValidation && { [extraValidation.key]: extraValidation.value }),
 	};
 
-	return { validatorKey, props };
+	return { validatorKey: keyToUse, props };
 }
 
 export class ValidatorFactory {
-	private static spawn(fieldProps: FieldProperties, key: string, form: UseFormGetValues<any>) {
+	private static createProxy(control: any): PathProxy<unknown> {
+		return PathProxyEngine.create(control, {
+			getValue(target: any, prop: string): unknown {
+				return (target as any)?.[prop];
+			},
+			getParent: function (target: any) {
+				return target?.["_parent"];
+			},
+			ignoreUndefined: true,
+			ignoreNull: true,
+		});
+	}
+
+	private static spawn(fieldProps: FieldProperties, key: string, formGetValues: UseFormGetValues<any>) {
 		if (!Validation.keys().includes(key)) throw new Error("Unsupported custom validation");
 
 		const validatorFn = (value: any) => {
 			const { name, type } = fieldProps;
-			const { validatorKey, props } = resolveValidatorKeyProps(
-				key,
-				fieldProps[key as keyof FieldProperties],
-				type
-			);
+			const { validatorKey, props } = resolveValidatorKeyProps(key, fieldProps[key as keyof FieldProperties], type);
 
 			const validator = Validation.get(validatorKey);
 			if (!validator) return `Unsupported validator: ${validatorKey}`;
@@ -72,13 +81,11 @@ export class ValidatorFactory {
 
 			let proxy: Record<string, any> = {};
 			if (Object.values(ComparisonValidationKeys).includes(key as ComparisonValidationKey)) {
-				proxy = form.getValues();
+				proxy = ValidatorFactory.createProxy(formGetValues());
 			}
 
 			let errs: string | undefined;
 			try {
-				if (props["type"] !== undefined) props["types"] = props["type"];
-
 				errs = validator.hasErrors(parsedValue, props, proxy);
 			} catch (e) {
 				errs = `${key} validator failed to validate: ${e}`;
@@ -104,16 +111,12 @@ export class ValidatorFactory {
 		};
 	}
 
-	static validatorsFromProps(
-		control: UseFormReturn<FieldValues, any, FieldValues>,
-		props: FieldProperties
-	): Validator {
-		console.log("FormMethods=", control);
+	static validatorsFromProps(control: UseFormReturn<FieldValues, any, FieldValues>, props: FieldProperties): Validator {
 		const supportedValidationKeys = Validation.keys();
 		const validators = Object.keys(props)
 			.filter((k: string) => supportedValidationKeys.includes(k))
 			.map((validatorKey: string) => {
-				return ValidatorFactory.spawn(props, validatorKey, control as any);
+				return ValidatorFactory.spawn(props, validatorKey, control.getValues);
 			});
 
 		return ValidatorFactory.combineValidators(validators);
