@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { Control, Controller, FieldValues } from "react-hook-form";
 import {
 	FormControl,
 	FormControlError,
@@ -85,6 +85,7 @@ export interface RnDecafCrudFieldProps {
 	mask?: string;
 	pattern?: string;
 	validateFn?: (value: any) => string | boolean;
+	control: Control<FieldValues, any, FieldValues>;
 }
 
 export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
@@ -107,14 +108,16 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 		size = "md",
 		space = "sm",
 		variant = "underlined",
+		control,
 		...props
 	} = fieldProps;
 
-	const { control } = useFormContext();
 	const fieldName = props.path;
 	const readonlyMode = [OperationKeys.READ, OperationKeys.DELETE].includes(operation);
 	const disabled = readonly || readonlyMode;
 	const inputType = ["password", "email", "url"].includes(type) ? type : originalInputType;
+
+	console.log("RnDecafCrudField props=", props);
 
 	const renderLabel = () =>
 		label && (
@@ -157,6 +160,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 						if (!options?.length) {
 							component = (
 								<Checkbox
+									aria-label={label}
 									size={size}
 									isChecked={!!field.value}
 									onChange={(checked) => field.onChange(checked)}
@@ -165,7 +169,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 									<CheckboxIndicator className="mr-2">
 										<CheckboxIcon as={CheckIcon} />
 									</CheckboxIndicator>
-									<CheckboxLabel aria-label={label}>{label}</CheckboxLabel>
+									<CheckboxLabel>{label}</CheckboxLabel>
 								</Checkbox>
 							);
 						} else {

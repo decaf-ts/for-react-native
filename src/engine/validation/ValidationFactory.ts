@@ -5,7 +5,7 @@ import {
 	ValidationKeys,
 } from "@decaf-ts/decorator-validation";
 import { FieldProperties, HTML5InputTypes, parseValueByType } from "@decaf-ts/ui-decorators";
-import { UseFormGetValues } from "react-hook-form";
+import { FieldValues, UseFormGetValues, UseFormReturn } from "react-hook-form";
 
 type ComparisonValidationKey =
 	(typeof ComparisonValidationKeys)[keyof typeof ComparisonValidationKeys];
@@ -51,7 +51,7 @@ function resolveValidatorKeyProps(key: string, value: unknown, type: string): Va
 }
 
 export class ValidatorFactory {
-	private static spawn(fieldProps: FieldProperties, key: string, getValues: UseFormGetValues<any>) {
+	private static spawn(fieldProps: FieldProperties, key: string, form: UseFormGetValues<any>) {
 		if (!Validation.keys().includes(key)) throw new Error("Unsupported custom validation");
 
 		const validatorFn = (value: any) => {
@@ -72,7 +72,7 @@ export class ValidatorFactory {
 
 			let proxy: Record<string, any> = {};
 			if (Object.values(ComparisonValidationKeys).includes(key as ComparisonValidationKey)) {
-				// proxy = getValues();
+				proxy = form.getValues();
 			}
 
 			let errs: string | undefined;
@@ -104,12 +104,16 @@ export class ValidatorFactory {
 		};
 	}
 
-	static validatorsFromProps(props: FieldProperties): Validator {
+	static validatorsFromProps(
+		control: UseFormReturn<FieldValues, any, FieldValues>,
+		props: FieldProperties
+	): Validator {
+		console.log("FormMethods=", control);
 		const supportedValidationKeys = Validation.keys();
 		const validators = Object.keys(props)
 			.filter((k: string) => supportedValidationKeys.includes(k))
 			.map((validatorKey: string) => {
-				return ValidatorFactory.spawn(props, validatorKey, {} as any);
+				return ValidatorFactory.spawn(props, validatorKey, control as any);
 			});
 
 		return ValidatorFactory.combineValidators(validators);
