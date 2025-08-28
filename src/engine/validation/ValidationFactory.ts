@@ -68,6 +68,7 @@ export class ValidatorFactory {
 		if (!Validation.keys().includes(key)) throw new Error("Unsupported custom validation");
 
 		const validatorFn = (value: any) => {
+			console.log("validatorFn fieldProps=", fieldProps);
 			const { name, type } = fieldProps;
 			const { validatorKey, props } = resolveValidatorKeyProps(key, fieldProps[key as keyof FieldProperties], type);
 

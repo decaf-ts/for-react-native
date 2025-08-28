@@ -2,17 +2,18 @@ import React from "react";
 import { Model } from "@decaf-ts/decorator-validation";
 import { FieldDefinition, RenderingEngine } from "@decaf-ts/ui-decorators";
 import { ComponentRegistry } from "@/src/engine/ComponentRegistry";
-import { ValidatorFactory } from "@/src/engine/validation";
-import { FieldValues, FormProvider, useForm, UseFormReturn } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import { StyleSheet } from "react-native";
 import { Button, ButtonText } from "@components/ui/button";
 import { HStack } from "@components/ui/hstack";
 import { VStack } from "@components/ui/vstack";
 import { Heading } from "@components/ui/heading";
+import { RnFormService } from "@/src/engine/RnFormService";
+import { ControlFieldProps, RnDecafCrudFieldProps } from "@/src/engine/types";
 
-export type RnFieldDefinition = FieldDefinition & {
-	validateFn?: (value: any) => string | undefined;
-};
+// export type RnFieldDefinition = FieldDefinition & {
+// 	validateFn?: (value: any) => string | undefined;
+// };
 
 const styles = StyleSheet.create({
 	footer: {
@@ -35,12 +36,16 @@ export class RnRenderingEngine extends RenderingEngine {
 		this.initialized = true;
 	}
 
-	private fromFieldDefinition(
-		formMethods: UseFormReturn<FieldValues, any, FieldValues>,
-		def: RnFieldDefinition
-	): React.ReactNode {
+	private fromFieldDefinition(def: FieldDefinition<any>): React.ReactNode {
 		const rendererId = def.rendererId || Math.random().toString(36).replace(".", "");
-		const { tag, props, children } = def;
+		const form = RnFormService.get(rendererId);
+
+		let componentProps: RnDecafCrudFieldProps | ControlFieldProps = def.props;
+		if (def.props?.path) {
+			componentProps = form.addFormControl(def.props);
+		}
+
+		const { tag, children } = def;
 		const Component = ComponentRegistry.get(tag);
 		if (!Component) {
 			console.warn(`Component ${def.tag} not found`);
@@ -48,18 +53,12 @@ export class RnRenderingEngine extends RenderingEngine {
 		}
 
 		const childrenComponents = children?.map((child, i) => {
-			return this.fromFieldDefinition(formMethods, {
+			return this.fromFieldDefinition({
 				...child,
-				rendererId: child.rendererId || `${rendererId}-${child.props.path || i}`,
+				rendererId: rendererId, // child.rendererId || `${rendererId}-${child.props.path || i}`,
 			});
 		});
 
-		const { control } = formMethods;
-		const validator = ValidatorFactory.validatorsFromProps(formMethods, props);
-		const componentProps: Record<string, any> = Object.assign({}, props, {
-			validateFn: validator,
-			control,
-		});
 		return (
 			<Component key={def.rendererId} {...componentProps}>
 				{childrenComponents}
@@ -70,21 +69,20 @@ export class RnRenderingEngine extends RenderingEngine {
 	render<M extends Model>(model: M, globalProps: Record<string, unknown> = {}): any {
 		try {
 			const def = this.toFieldDefinition(model, globalProps);
-			console.log("DEF=", def);
+			console.log("toFieldDefinition=", def);
 			const RenderingForm = () => {
-				const methods = useForm();
+				const component = this.fromFieldDefinition(def);
+				const methods = RnFormService.get(def.rendererId!).getMethods();
+
 				return (
 					<FormProvider {...methods}>
 						<VStack space="md">
-							{this.fromFieldDefinition(methods, def)}
+							{component}
 							<HStack space="sm" style={styles.footer}>
 								<Button style={styles.button} onPress={() => methods.reset()}>
 									<ButtonText>Cancel</ButtonText>
 								</Button>
-								<Button
-									style={styles.button}
-									onPress={methods.handleSubmit((data) => console.log("Submit:", data))}
-								>
+								<Button style={styles.button} onPress={methods.handleSubmit((data) => console.log("Submit:", data))}>
 									<ButtonText>Submit</ButtonText>
 								</Button>
 							</HStack>
