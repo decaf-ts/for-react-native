@@ -7,7 +7,9 @@ export interface RnDecafCrudFormProps {
 	props?: any;
 }
 
-export const RnDecafCrudForm: React.FC<RnDecafCrudFormProps> = ({ children, props }) => {
+export const RnDecafCrudForm: React.FC<RnDecafCrudFormProps> = (propsx) => {
+	const { children, props } = propsx;
+	console.log("$ RnDecafCrudForm props=", propsx);
 	const parentForm = useFormContext();
 
 	const isRoot = !parentForm;
@@ -15,6 +17,8 @@ export const RnDecafCrudForm: React.FC<RnDecafCrudFormProps> = ({ children, prop
 
 	if (isRoot) {
 		return (
+			// <FormProvider {...methods}>
+			// </FormProvider>
 			<VStack space="md">
 				<form>{children}</form>
 			</VStack>

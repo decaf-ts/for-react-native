@@ -36,16 +36,17 @@ export class RnRenderingEngine extends RenderingEngine {
 		this.initialized = true;
 	}
 
-	private fromFieldDefinition(def: FieldDefinition<any>): React.ReactNode {
+	private fromFieldDefinition(def: FieldDefinition<RnDecafCrudFieldProps>): React.ReactNode {
 		const rendererId = def.rendererId || Math.random().toString(36).replace(".", "");
 		const form = RnFormService.get(rendererId);
 
-		let componentProps: RnDecafCrudFieldProps | ControlFieldProps = def.props;
+		let componentProps: RnDecafCrudFieldProps | ControlFieldProps = { ...def.props, formProvider: form };
 		if (def.props?.path) {
 			componentProps = form.addFormControl(def.props);
 		}
 
 		const { tag, children } = def;
+		// console.log("fromFieldDefinition def=", def);
 		const Component = ComponentRegistry.get(tag);
 		if (!Component) {
 			console.warn(`Component ${def.tag} not found`);
@@ -53,14 +54,15 @@ export class RnRenderingEngine extends RenderingEngine {
 		}
 
 		const childrenComponents = children?.map((child, i) => {
+			const { formId } = form.getFormIdPath();
 			return this.fromFieldDefinition({
 				...child,
-				rendererId: rendererId, // child.rendererId || `${rendererId}-${child.props.path || i}`,
+				rendererId: RnFormService.makeFormIdPath(formId, child.props.childOf),
 			});
 		});
 
 		return (
-			<Component key={def.rendererId} {...componentProps}>
+			<Component key={[rendererId, componentProps.name || ""].join(".")} {...componentProps}>
 				{childrenComponents}
 			</Component>
 		);

@@ -11,13 +11,7 @@ import {
 import { VStack } from "@components/ui/vstack";
 import { Input, InputField, InputIcon, InputSlot } from "@components/ui/input";
 import { Textarea, TextareaInput } from "@components/ui/textarea";
-import {
-	Checkbox,
-	CheckboxGroup,
-	CheckboxIcon,
-	CheckboxIndicator,
-	CheckboxLabel,
-} from "@components/ui/checkbox";
+import { Checkbox, CheckboxGroup, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from "@components/ui/checkbox";
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@components/ui/radio";
 import {
 	Select,
@@ -31,16 +25,11 @@ import {
 	SelectPortal,
 	SelectTrigger,
 } from "@components/ui/select";
-import {
-	AlertCircleIcon,
-	CheckIcon,
-	ChevronDownIcon,
-	CircleIcon,
-	EyeIcon,
-	EyeOffIcon,
-} from "@components/ui/icon";
+import { AlertCircleIcon, CheckIcon, ChevronDownIcon, CircleIcon, EyeIcon, EyeOffIcon } from "@components/ui/icon";
 import { CrudOperations, OperationKeys } from "@decaf-ts/db-decorators";
 import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@components/ui/slider";
+import { ControlFieldProps } from "@/src/engine/types";
+import { RnFormService } from "@/src/engine/RnFormService";
 
 type Option = {
 	text: string;
@@ -86,11 +75,10 @@ export interface RnDecafCrudFieldProps {
 	pattern?: string;
 	validateFn?: (value: any) => string | boolean;
 	control: Control<FieldValues, any, FieldValues>;
+	formProvider: RnFormService;
 }
 
-export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
-	fieldProps: RnDecafCrudFieldProps
-) => {
+export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: RnDecafCrudFieldProps) => {
 	const {
 		operation = OperationKeys.CREATE,
 		type,
@@ -109,15 +97,17 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 		space = "sm",
 		variant = "underlined",
 		control,
+		formProvider,
 		...props
 	} = fieldProps;
+
+	console.log("RnDecafCrudField: ", fieldProps);
+	// const { control } = formProvider.getMethods();
 
 	const fieldName = props.path;
 	const readonlyMode = [OperationKeys.READ, OperationKeys.DELETE].includes(operation);
 	const disabled = readonly || readonlyMode;
 	const inputType = ["password", "email", "url"].includes(type) ? type : originalInputType;
-
-	console.log("RnDecafCrudField props=", props);
 
 	const renderLabel = () =>
 		label && (
@@ -176,18 +166,10 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 							component = (
 								<>
 									{renderLabel()}
-									<CheckboxGroup
-										value={field.value || []}
-										onChange={(keys) => field.onChange(keys)}
-									>
+									<CheckboxGroup value={field.value || []} onChange={(keys) => field.onChange(keys)}>
 										<VStack space={space}>
 											{options.map((option) => (
-												<Checkbox
-													key={option.value}
-													size={size}
-													value={option.value}
-													isDisabled={option.disabled}
-												>
+												<Checkbox key={option.value} size={size} value={option.value} isDisabled={option.disabled}>
 													<CheckboxIndicator className="mr-2">
 														<CheckboxIcon as={CheckIcon} />
 													</CheckboxIndicator>
@@ -208,12 +190,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 								<RadioGroup value={field.value} onChange={field.onChange}>
 									<VStack space={space}>
 										{options.map((option) => (
-											<Radio
-												key={option.value}
-												id={`${fieldName}-${option.value}`}
-												size={size}
-												value={option.value}
-											>
+											<Radio key={option.value} id={`${fieldName}-${option.value}`} size={size} value={option.value}>
 												<RadioIndicator>
 													<RadioIcon as={CircleIcon} />
 												</RadioIndicator>
@@ -332,9 +309,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (
 							{component}
 							<FormControlError>
 								<FormControlErrorIcon as={AlertCircleIcon} />
-								{fieldState.error && (
-									<FormControlErrorText>{fieldState.error.message}</FormControlErrorText>
-								)}
+								{fieldState.error && <FormControlErrorText>{fieldState.error.message}</FormControlErrorText>}
 							</FormControlError>
 						</FormControl>
 					</VStack>

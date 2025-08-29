@@ -6,8 +6,9 @@ import {
 	Validation,
 	ValidationKeys,
 } from "@decaf-ts/decorator-validation";
-import { FieldProperties, HTML5InputTypes, parseValueByType } from "@decaf-ts/ui-decorators";
+import { HTML5InputTypes, parseValueByType } from "@decaf-ts/ui-decorators";
 import { FieldValues, UseFormGetValues, UseFormReturn } from "react-hook-form";
+import { ControlFieldProps } from "@/src/engine/types";
 
 type ComparisonValidationKey = (typeof ComparisonValidationKeys)[keyof typeof ComparisonValidationKeys];
 
@@ -54,7 +55,7 @@ export class ValidatorFactory {
 	private static createProxy(control: Record<string, any>): PathProxy<unknown> {
 		return PathProxyEngine.create(control, {
 			getValue(target: any, prop: string): unknown {
-				return (target as any)?.[prop];
+				return (target as any)?.getFormData();
 			},
 			getParent: function (target: any) {
 				return target?.["_parent"];
@@ -64,13 +65,13 @@ export class ValidatorFactory {
 		});
 	}
 
-	private static spawn(fieldProps: FieldProperties, key: string, formGetValues: UseFormGetValues<any>) {
+	private static spawn(fieldProps: ControlFieldProps, key: string, formGetValues: UseFormGetValues<any>) {
 		if (!Validation.keys().includes(key)) throw new Error("Unsupported custom validation");
 
 		const validatorFn = (value: any) => {
-			console.log("validatorFn fieldProps=", fieldProps);
+			console.log("validatorFn fieldProps=", fieldProps.form.getFormData());
 			const { name, type } = fieldProps;
-			const { validatorKey, props } = resolveValidatorKeyProps(key, fieldProps[key as keyof FieldProperties], type);
+			const { validatorKey, props } = resolveValidatorKeyProps(key, fieldProps[key as keyof ControlFieldProps], type);
 
 			const validator = Validation.get(validatorKey);
 			if (!validator) return `Unsupported validator: ${validatorKey}`;
@@ -82,7 +83,7 @@ export class ValidatorFactory {
 
 			let proxy: Record<string, any> = {};
 			if (Object.values(ComparisonValidationKeys).includes(key as ComparisonValidationKey)) {
-				proxy = ValidatorFactory.createProxy(formGetValues());
+				proxy = ValidatorFactory.createProxy(fieldProps.form);
 			}
 
 			let errs: string | undefined;
@@ -112,7 +113,10 @@ export class ValidatorFactory {
 		};
 	}
 
-	static validatorsFromProps(control: UseFormReturn<FieldValues, any, FieldValues>, props: FieldProperties): Validator {
+	static validatorsFromProps(
+		control: UseFormReturn<FieldValues, any, FieldValues>,
+		props: ControlFieldProps
+	): Validator {
 		const supportedValidationKeys = Validation.keys();
 		const validators = Object.keys(props)
 			.filter((k: string) => supportedValidationKeys.includes(k))
