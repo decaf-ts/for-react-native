@@ -1,4 +1,4 @@
-import { FieldValues, useForm, UseFormReturn } from "react-hook-form";
+import { FieldValues, useForm, useFormContext, UseFormReturn } from "react-hook-form";
 import { ControlFieldProps, RnDecafCrudFieldProps } from "@/src/engine/types";
 import { ValidatorFactory } from "@/src/engine/validation";
 import { escapeHtml, HTML5CheckTypes, HTML5InputTypes, parseToNumber } from "@decaf-ts/ui-decorators";
@@ -24,7 +24,15 @@ export class RnFormService {
 		this._parent = parent;
 	}
 
-	getValues() {}
+	submit() {
+		this.formMethods.handleSubmit((data) => {
+			console.log("Submit=", data);
+		})();
+	}
+
+	reset() {
+		this.formMethods.reset();
+	}
 
 	getFormData(): Record<string, unknown> {
 		const form = this;
@@ -54,6 +62,7 @@ export class RnFormService {
 		}
 
 		console.log("getFormData=", data);
+		console.log("getValues=", this.formMethods.getValues());
 		return data;
 	}
 
@@ -99,6 +108,10 @@ export class RnFormService {
 		return currentForm;
 	}
 
+	getContext() {
+		return useFormContext();
+	}
+
 	/**
 	 * Creates or finds a form in registry and adds a new field config.
 	 * Also recursively registers children.
@@ -135,15 +148,11 @@ export class RnFormService {
 	/**
 	 * Retorna os dados do formulário.
 	 */
-	static getFormData(formId: string): Record<string, unknown> {
-		const formMethods = this.formRegistry.get(formId);
-		if (!formMethods) return {};
-		return formMethods.getValues();
-	}
-
-	reset(formId: string) {
-		this.formMethods.reset();
-	}
+	// static getFormData(formId: string): Record<string, unknown> {
+	// 	const formMethods = this.formRegistry.get(formId);
+	// 	if (!formMethods) return {};
+	// 	return formMethods.getValues();
+	// }
 
 	static validateFields(formId: string): boolean {
 		const formMethods = this.formRegistry.get(formId);

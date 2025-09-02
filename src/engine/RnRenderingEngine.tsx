@@ -7,9 +7,9 @@ import { StyleSheet } from "react-native";
 import { Button, ButtonText } from "@components/ui/button";
 import { HStack } from "@components/ui/hstack";
 import { VStack } from "@components/ui/vstack";
-import { Heading } from "@components/ui/heading";
 import { RnFormService } from "@/src/engine/RnFormService";
 import { ControlFieldProps, RnDecafCrudFieldProps } from "@/src/engine/types";
+import { Heading } from "@components/ui/heading";
 
 // export type RnFieldDefinition = FieldDefinition & {
 // 	validateFn?: (value: any) => string | undefined;
@@ -54,6 +54,8 @@ export class RnRenderingEngine extends RenderingEngine {
 		}
 
 		const childrenComponents = children?.map((child, i) => {
+			if (child.props.childOf) form.addChild(child.props.childOf);
+
 			const { formId } = form.getFormIdPath();
 			return this.fromFieldDefinition({
 				...child,
@@ -74,17 +76,17 @@ export class RnRenderingEngine extends RenderingEngine {
 			console.log("toFieldDefinition=", def);
 			const RenderingForm = () => {
 				const component = this.fromFieldDefinition(def);
-				const methods = RnFormService.get(def.rendererId!).getMethods();
-
+				const form = RnFormService.get(def.rendererId!);
+				const methods = form.getMethods();
 				return (
 					<FormProvider {...methods}>
 						<VStack space="md">
 							{component}
 							<HStack space="sm" style={styles.footer}>
-								<Button style={styles.button} onPress={() => methods.reset()}>
+								<Button style={styles.button} onPress={() => form.reset()}>
 									<ButtonText>Cancel</ButtonText>
 								</Button>
-								<Button style={styles.button} onPress={methods.handleSubmit((data) => console.log("Submit:", data))}>
+								<Button style={styles.button} onPress={() => form.submit()}>
 									<ButtonText>Submit</ButtonText>
 								</Button>
 							</HStack>

@@ -6,9 +6,11 @@ import { StyleSheet, View } from "react-native";
 interface FieldsetProps {
 	name: string;
 	children: React.ReactNode;
+	formProvider: any;
 }
 
-export function RnFieldset({ name, children }: FieldsetProps) {
+export function RnFieldset({ name, children, formProvider }: FieldsetProps) {
+	// const methods = formProvider.getMethods();
 	return (
 		<View style={styles.wrapper}>
 			{/* Title*/}
@@ -17,7 +19,9 @@ export function RnFieldset({ name, children }: FieldsetProps) {
 			</View>
 
 			<Box style={styles.fieldset}>
+				{/*<FormProvider {...methods}>*/}
 				<View style={styles.content}>{children}</View>
+				{/*</FormProvider>*/}
 			</Box>
 		</View>
 	);

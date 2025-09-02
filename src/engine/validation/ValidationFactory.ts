@@ -69,7 +69,7 @@ export class ValidatorFactory {
 		if (!Validation.keys().includes(key)) throw new Error("Unsupported custom validation");
 
 		const validatorFn = (value: any) => {
-			console.log("validatorFn fieldProps=", fieldProps.form.getFormData());
+			// console.log("validatorFn fieldProps=", fieldProps.form.getFormData());
 			const { name, type } = fieldProps;
 			const { validatorKey, props } = resolveValidatorKeyProps(key, fieldProps[key as keyof ControlFieldProps], type);
 
@@ -83,6 +83,7 @@ export class ValidatorFactory {
 
 			let proxy: Record<string, any> = {};
 			if (Object.values(ComparisonValidationKeys).includes(key as ComparisonValidationKey)) {
+				console.log("Proxy=", proxy);
 				proxy = ValidatorFactory.createProxy(fieldProps.form);
 			}
 

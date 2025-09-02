@@ -1,5 +1,5 @@
 import React from "react";
-import { Control, Controller, FieldValues } from "react-hook-form";
+import { Control, Controller, FieldValues, useFormContext } from "react-hook-form";
 import {
 	FormControl,
 	FormControlError,
@@ -96,12 +96,13 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: Rn
 		size = "md",
 		space = "sm",
 		variant = "underlined",
-		control,
+		// control,
 		formProvider,
 		...props
 	} = fieldProps;
 
-	console.log("RnDecafCrudField: ", fieldProps);
+	// console.log("RnDecafCrudField: ", fieldProps, "->", formProvider);
+	const { control } = useFormContext();
 	// const { control } = formProvider.getMethods();
 
 	const fieldName = props.path;
