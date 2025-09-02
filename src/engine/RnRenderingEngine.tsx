@@ -3,28 +3,11 @@ import { Model } from "@decaf-ts/decorator-validation";
 import { FieldDefinition, RenderingEngine } from "@decaf-ts/ui-decorators";
 import { ComponentRegistry } from "@/src/engine/ComponentRegistry";
 import { FormProvider } from "react-hook-form";
-import { StyleSheet } from "react-native";
-import { Button, ButtonText } from "@components/ui/button";
 import { HStack } from "@components/ui/hstack";
 import { VStack } from "@components/ui/vstack";
 import { RnFormService } from "@/src/engine/RnFormService";
 import { ControlFieldProps, RnDecafCrudFieldProps } from "@/src/engine/types";
 import { Heading } from "@components/ui/heading";
-
-// export type RnFieldDefinition = FieldDefinition & {
-// 	validateFn?: (value: any) => string | undefined;
-// };
-
-const styles = StyleSheet.create({
-	footer: {
-		marginTop: 10,
-		marginBottom: 20,
-		gap: 10,
-	},
-	button: {
-		flex: 1,
-	},
-});
 
 export class RnRenderingEngine extends RenderingEngine {
 	constructor() {
@@ -79,17 +62,7 @@ export class RnRenderingEngine extends RenderingEngine {
 				const methods = form.getMethods();
 				return (
 					<FormProvider {...methods}>
-						<VStack space="md">
-							{component}
-							<HStack space="sm" style={styles.footer}>
-								<Button style={styles.button} onPress={() => form.reset()}>
-									<ButtonText>Cancel</ButtonText>
-								</Button>
-								<Button style={styles.button} onPress={() => form.submit()}>
-									<ButtonText>Submit</ButtonText>
-								</Button>
-							</HStack>
-						</VStack>
+						<VStack space="md">{component}</VStack>
 					</FormProvider>
 				);
 			};

@@ -139,12 +139,13 @@ export class RnFormService {
 			return f.addFormControl(props);
 		}
 
-		const validatorProps: ControlFieldProps = Object.assign({}, props, {
-			form: this,
+		const controlProps: Partial<ControlFieldProps> = {
+			formProvider: this,
 			control: this.formMethods.control,
-		});
+		};
+		const validatorProps: ControlFieldProps = Object.assign({}, props, controlProps) as ControlFieldProps;
 
-		const validator = ValidatorFactory.validatorsFromProps(this.formMethods, validatorProps);
+		const validator = ValidatorFactory.validatorsFromProps(validatorProps);
 		const fieldProps = { ...validatorProps, validateFn: validator };
 
 		this.controls.set(name, fieldProps);
