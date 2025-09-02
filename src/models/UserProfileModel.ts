@@ -81,7 +81,7 @@ export class UserProfileModel extends Model {
 	address!: AddressModel;
 
 	@required()
-	@eq("./specialization")
+	@eq("professionalInfo.specialization")
 	@uielement("ngx-decaf-crud-field", {
 		label: "Specialization",
 	})

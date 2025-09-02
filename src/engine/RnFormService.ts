@@ -20,8 +20,16 @@ export class RnFormService {
 		private readonly formId: string,
 		parent?: RnFormService
 	) {
-		this.formMethods = useForm();
 		this._parent = parent;
+		this.formMethods = parent ? parent.getMethods() : useForm();
+	}
+
+	getControl(path: string): ControlFieldProps | RnFormService | undefined {
+		// let currentControl = this as any;
+		// for (const key in path.split(".")) {
+		// 	currentControl = currentControl.controls.get(key);
+		// }
+		return this.controls.get(path);
 	}
 
 	submit() {
@@ -34,21 +42,30 @@ export class RnFormService {
 		this.formMethods.reset();
 	}
 
-	getFormData(): Record<string, unknown> {
+	getValues(path?: string): any {
+		const values = this.formMethods.getValues();
+		if (!path) return values;
+
+		return path.split(".").reduce((acc, key) => {
+			return acc && typeof acc === "object" ? acc[key] : undefined;
+		}, values);
+	}
+
+	getParsedData(): Record<string, unknown> {
 		const form = this;
 		const data: Record<string, unknown> = {};
 		for (const key of form.controls.keys()) {
 			const props = form.controls.get(key)!;
 			if (props instanceof RnFormService) {
-				data[key] = props.getFormData();
+				data[key] = props.getParsedData();
 				continue;
 			}
 
-			let value: any = props.value;
+			let value: any = this.getValues(props.path);
 			if (!HTML5CheckTypes.includes(props.type)) {
 				switch (props.type) {
 					case HTML5InputTypes.NUMBER:
-						value = parseToNumber(value as any);
+						value = parseToNumber(value);
 						break;
 					case HTML5InputTypes.DATE:
 					case HTML5InputTypes.DATETIME_LOCAL:
@@ -62,7 +79,6 @@ export class RnFormService {
 		}
 
 		console.log("getFormData=", data);
-		console.log("getValues=", this.formMethods.getValues());
 		return data;
 	}
 

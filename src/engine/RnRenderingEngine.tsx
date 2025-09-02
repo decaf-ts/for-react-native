@@ -46,7 +46,6 @@ export class RnRenderingEngine extends RenderingEngine {
 		}
 
 		const { tag, children } = def;
-		// console.log("fromFieldDefinition def=", def);
 		const Component = ComponentRegistry.get(tag);
 		if (!Component) {
 			console.warn(`Component ${def.tag} not found`);

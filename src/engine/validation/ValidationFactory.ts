@@ -9,6 +9,7 @@ import {
 import { HTML5InputTypes, parseValueByType } from "@decaf-ts/ui-decorators";
 import { FieldValues, UseFormGetValues, UseFormReturn } from "react-hook-form";
 import { ControlFieldProps } from "@/src/engine/types";
+import { RnFormService } from "@/src/engine/RnFormService";
 
 type ComparisonValidationKey = (typeof ComparisonValidationKeys)[keyof typeof ComparisonValidationKeys];
 
@@ -55,17 +56,19 @@ export class ValidatorFactory {
 	private static createProxy(control: Record<string, any>): PathProxy<unknown> {
 		return PathProxyEngine.create(control, {
 			getValue(target: any, prop: string): unknown {
-				return (target as any)?.getFormData();
+				const t = (target as RnFormService).getControl(prop);
+				if (t instanceof RnFormService) return t;
+				return (target as RnFormService).getValues(prop);
 			},
 			getParent: function (target: any) {
-				return target?.["_parent"];
+				return (target as RnFormService)?._parent;
 			},
 			ignoreUndefined: true,
 			ignoreNull: true,
 		});
 	}
 
-	private static spawn(fieldProps: ControlFieldProps, key: string, formGetValues: UseFormGetValues<any>) {
+	private static spawn(fieldProps: ControlFieldProps, key: string) {
 		if (!Validation.keys().includes(key)) throw new Error("Unsupported custom validation");
 
 		const validatorFn = (value: any) => {
