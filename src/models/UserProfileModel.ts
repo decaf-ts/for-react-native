@@ -29,6 +29,15 @@ export class UserProfileModel extends Model {
 	fullName!: string;
 
 	@required()
+	@minlength(5)
+	@maxlength(36)
+	@eq("./fullName")
+	@uielement("ngx-decaf-crud-field", {
+		label: "Legal Name",
+	})
+	legalName!: string;
+
+	@required()
 	@date("yyyy-MM-dd")
 	@uielement("ngx-decaf-crud-field", {
 		label: "Birth Date",
@@ -81,7 +90,7 @@ export class UserProfileModel extends Model {
 	address!: AddressModel;
 
 	@required()
-	@eq("professionalInfo.specialization")
+	@diff("professionalInfo.specialization")
 	@uielement("ngx-decaf-crud-field", {
 		label: "Specialization",
 	})

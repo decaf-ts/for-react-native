@@ -10,6 +10,7 @@ import { HTML5InputTypes, parseValueByType } from "@decaf-ts/ui-decorators";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { ControlFieldProps } from "@/src/engine/types";
 import { RnFormService } from "@/src/engine/RnFormService";
+import { RnRenderingEngine } from "@/src/engine";
 
 type ComparisonValidationKey = (typeof ComparisonValidationKeys)[keyof typeof ComparisonValidationKeys];
 
@@ -24,7 +25,7 @@ function resolveValidatorKeyProps(validatorKey: string, value: unknown, type: st
 	const extraValidators: Record<string, { key: string; value: any }> = {
 		[ValidationKeys.TYPE]: {
 			key: "types",
-			value: value,
+			value: RnRenderingEngine.get().translate(value as string, false),
 		},
 		[ValidationKeys.PASSWORD]: {
 			key: ValidationKeys.PATTERN,
@@ -42,10 +43,12 @@ function resolveValidatorKeyProps(validatorKey: string, value: unknown, type: st
 
 	const isTypeValidator = validatorKey === ValidationKeys.TYPE;
 	const extraValidation = isTypeValidator ? extraValidators[type] || extraValidators[ValidationKeys.TYPE] : undefined;
-	const keyToUse = isTypeValidator ? type : validatorKey;
+	const keyToUse = [ValidationKeys.PASSWORD, ValidationKeys.EMAIL, ValidationKeys.URL].includes(type as any)
+		? type
+		: validatorKey;
 
 	const props: Record<string, unknown> = {
-		[keyToUse]: value,
+		[keyToUse]: isTypeValidator ? RnRenderingEngine.get().translate(value as string, false) : value,
 		...(extraValidation && { [extraValidation.key]: extraValidation.value }),
 	};
 
