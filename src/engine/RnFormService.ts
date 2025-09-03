@@ -2,6 +2,7 @@ import { FieldValues, useForm, useFormContext, UseFormReturn } from "react-hook-
 import { ControlFieldProps, RnDecafCrudFieldProps } from "@/src/engine/types";
 import { ValidatorFactory } from "@/src/engine/validation";
 import { escapeHtml, HTML5CheckTypes, HTML5InputTypes, parseToNumber } from "@decaf-ts/ui-decorators";
+import { PARENT_TOKEN, tokenizePath } from "@/src/engine/utils";
 
 type FieldProperties = {
 	name: string;
@@ -25,11 +26,31 @@ export class RnFormService {
 	}
 
 	getControl(path: string): ControlFieldProps | RnFormService | undefined {
-		// let currentControl = this as any;
-		// for (const key in path.split(".")) {
-		// 	currentControl = currentControl.controls.get(key);
-		// }
-		return this.controls.get(path);
+		const steps = tokenizePath(path);
+		if (steps.length === 0) return undefined;
+
+		let current: RnFormService | undefined = this;
+		for (let i = 0; i < steps.length; i++) {
+			const step = steps[i];
+
+			if (step === PARENT_TOKEN) {
+				if (!current?._parent) return undefined;
+				current = current._parent;
+				continue;
+			}
+
+			const control: ControlFieldProps | RnFormService | undefined = current!.controls.get(step);
+			if (!control) return undefined;
+
+			// If it's the last segment, return whatever was found
+			if (i === steps.length - 1) return control;
+
+			if (control instanceof RnFormService) {
+				current = control;
+			}
+		}
+
+		return undefined;
 	}
 
 	submit() {
@@ -162,19 +183,9 @@ export class RnFormService {
 		return this.controls.get(path);
 	}
 
-	/**
-	 * Retorna os dados do formulário.
-	 */
-	// static getFormData(formId: string): Record<string, unknown> {
-	// 	const formMethods = this.formRegistry.get(formId);
-	// 	if (!formMethods) return {};
-	// 	return formMethods.getValues();
-	// }
-
 	static validateFields(formId: string): boolean {
 		const formMethods = this.formRegistry.get(formId);
 		if (!formMethods) return false;
-		// Em RHF, validação dispara via handleSubmit; aqui apenas proxy
 		return true;
 	}
 
@@ -184,13 +195,6 @@ export class RnFormService {
 
 	private static formRegistry = new Map<string, RnFormService>();
 	private static controls = new Map<string, FieldProperties>();
-
-	/**
-	 * Retorna propriedades do campo salvo (FieldProperties).
-	 */
-	static getPropsFromControl(path: string): FieldProperties {
-		return this.controls.get(path) || ({} as any);
-	}
 
 	/**
 	 * Adds a form to the registry.

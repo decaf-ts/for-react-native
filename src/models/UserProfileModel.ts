@@ -31,7 +31,7 @@ export class UserProfileModel extends Model {
 	@required()
 	@minlength(5)
 	@maxlength(36)
-	@eq("./fullName")
+	@eq("./fullName", { label: "Full Name" })
 	@uielement("ngx-decaf-crud-field", {
 		label: "Legal Name",
 	})

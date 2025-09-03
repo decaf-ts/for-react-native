@@ -7,7 +7,6 @@ import {
 	ValidationKeys,
 } from "@decaf-ts/decorator-validation";
 import { HTML5InputTypes, parseValueByType } from "@decaf-ts/ui-decorators";
-import { FieldValues, UseFormReturn } from "react-hook-form";
 import { ControlFieldProps } from "@/src/engine/types";
 import { RnFormService } from "@/src/engine/RnFormService";
 import { RnRenderingEngine } from "@/src/engine";
@@ -74,6 +73,12 @@ export class ValidatorFactory {
 	private static spawn(fieldProps: ControlFieldProps, key: string) {
 		if (!Validation.keys().includes(key)) throw new Error("Unsupported custom validation");
 
+		let proxy: Record<string, any> = {};
+		const additionalProps: Record<string, any> = {};
+		if (Object.values(ComparisonValidationKeys).includes(key as ComparisonValidationKey)) {
+			proxy = ValidatorFactory.createProxy(fieldProps.formProvider);
+		}
+
 		const validatorFn = (value: any) => {
 			const { name, type } = fieldProps;
 			const { validatorKey, props } = resolveValidatorKeyProps(key, fieldProps[key as keyof ControlFieldProps], type);
@@ -86,14 +91,16 @@ export class ValidatorFactory {
 					? parseValueByType(type, type === HTML5InputTypes.CHECKBOX ? name : value, fieldProps)
 					: undefined;
 
-			let proxy: Record<string, any> = {};
-			if (Object.values(ComparisonValidationKeys).includes(key as ComparisonValidationKey)) {
-				proxy = ValidatorFactory.createProxy(fieldProps.formProvider);
-			}
-
 			let errs: string | undefined;
 			try {
-				errs = validator.hasErrors(parsedValue, props, proxy);
+				if (Object.values(ComparisonValidationKeys).includes(key as ComparisonValidationKey)) {
+					const comparisonPropControl = (fieldProps.formProvider as RnFormService).getControl(
+						(fieldProps as any)[key]
+					) as ControlFieldProps;
+					console.log("Control=", comparisonPropControl);
+					additionalProps["label"] = comparisonPropControl?.label;
+				}
+				errs = validator.hasErrors(parsedValue, { ...props, ...additionalProps }, proxy);
 			} catch (e) {
 				errs = `${key} validator failed to validate: ${e}`;
 				console.warn(errs);
