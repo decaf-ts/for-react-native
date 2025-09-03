@@ -1,5 +1,7 @@
 import { Control, FieldValues } from "react-hook-form";
 import { FieldProperties } from "@decaf-ts/ui-decorators";
+import { OperationKeys } from "@decaf-ts/db-decorators";
+import type { RnFormService } from "@engine";
 
 export type Option = {
 	text: string;
@@ -33,7 +35,8 @@ export interface RnDecafCrudFieldProps extends FieldProperties {
 }
 
 export interface ControlFieldProps extends RnDecafCrudFieldProps {
-	formProvider?: any;
+	operation?: OperationKeys;
+	formProvider: RnFormService;
 	validateFn?: (value: any) => string | boolean;
 	control: Control<FieldValues, any, FieldValues>;
 }

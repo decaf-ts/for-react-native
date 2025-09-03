@@ -1,46 +1,68 @@
-import { Component } from "react";
-
-type ComponentConstructor = new () => Component;
 type RenderComponent = React.ComponentType<any>;
 
+/**
+ * @description Registry class for managing dynamic React components.
+ * @summary The `ComponentRegistry` provides a static store for React components keyed by a string tag.
+ * It allows registering components at runtime and retrieving them later, enabling dynamic rendering
+ * strategies (e.g., rendering components from JSON configs or CMS-driven schemas).
+ *
+ * @class
+ *
+ * @example
+ * ```tsx
+ * import { ComponentRegistry } from "./ComponentRegistry";
+ *
+ * // Define components
+ * const Button = () => <button>Click</button>;
+ * const Input = () => <input />;
+ *
+ * // Register components
+ * ComponentRegistry.register("button", Button);
+ * ComponentRegistry.register("input", Input);
+ *
+ * // Retrieve and render dynamically
+ * const Tag = "button";
+ * const Comp = ComponentRegistry.get(Tag);
+ *
+ * export default function App() {
+ *   return (
+ *     <div>
+ *       {Comp ? <Comp /> : <p>Unknown component</p>}
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @mermaid
+ * sequenceDiagram
+ *   participant U as User
+ *   participant CR as ComponentRegistry
+ *   participant R as React
+ *
+ *   U->>CR: register("button", Button)
+ *   CR->>CR: store component in Map
+ *   U->>CR: get("button")
+ *   CR->>U: returns Button component
+ *   U->>R: render <Button />
+ */
 export class ComponentRegistry {
 	private static components = new Map<string, RenderComponent>();
 
-	static register(name: string, component: RenderComponent) {
-		this.components.set(name, component);
+	static register(tag: string, comp: RenderComponent) {
+		this.components.set(tag, comp);
+		return comp;
 	}
 
-	static get(name: string): RenderComponent | undefined {
-		return this.components.get(name);
+	static get(tag: string): RenderComponent | undefined {
+		const comp = this.components.get(tag);
+		if (!comp) console.warn(`Component "${tag}" not found on registry.`);
+		return comp;
 	}
-
-	// private static components = new Map<string, ComponentConstructor>();
-	//
-	// static register(name: string, ctor: ComponentConstructor) {
-	// 	if (this.components.has(name)) {
-	// 		console.warn(`Component "${name}" already registered.`);
-	// 	}
-	// 	this.components.set(name, ctor);
-	// }
-	//
-	// static get(name: string): Component {
-	// 	const ctor = this.components.get(name);
-	// 	if (!ctor) {
-	// 		throw new Error(`Component "${name}" not found on registry.`);
-	// 	}
-	// 	return new ctor();
-	// }
 }
 
-// export function component(name: string) {
-// 	return function <T extends { new (...args: any[]): Component }>(ctor: T) {
-// 		ComponentRegistry.register(name, ctor);
+// export function component(tag: string) {
+// 	return function <T extends React.ComponentType<any>>(comp: T) {
+// 		ComponentRegistry.register(tag, comp);
+// 		return comp;
 // 	};
 // }
-
-export function component(tag: string) {
-	return function <T extends React.ComponentType<any>>(component: T) {
-		ComponentRegistry.register(tag, component);
-		return component;
-	};
-}

@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { Center } from "@components/ui/center";
 import { Divider } from "@components/ui/divider";
 import { Heading } from "@components/ui/heading";
-import { ComponentRegistry, RnRenderingEngine } from "@/src/engine";
+import { ComponentRegistry, RnRenderingEngine } from "@engine";
 import { RnDecafCrudForm } from "@components/decaf/RnDecafCrudForm";
 import { RnDecafCrudField } from "@components/decaf/RnDecafCrudField";
 import { ScrollView } from "react-native";
@@ -54,8 +54,6 @@ const model = new UserProfileModel({
 });
 
 // import "@components/NgxDecafCrudForm";
-// import "@components/NgxDecafCrudField";
-
 ComponentRegistry.register("ngx-decaf-crud-form", RnDecafCrudForm);
 ComponentRegistry.register("ngx-decaf-crud-field", RnDecafCrudField);
 ComponentRegistry.register("ngx-decaf-fieldset", RnFieldset);

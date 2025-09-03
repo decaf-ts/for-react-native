@@ -1,6 +1,6 @@
 import React from "react";
 import { VStack } from "@components/ui/vstack";
-import { RnFormService } from "@/src/engine/RnFormService";
+import type { RnFormService } from "@engine";
 import { Button, ButtonText } from "@components/ui/button";
 import { HStack } from "@components/ui/hstack";
 import { StyleSheet } from "react-native";
@@ -11,18 +11,12 @@ export interface RnDecafCrudFormProps {
 	formProvider: RnFormService;
 }
 
-const styles = StyleSheet.create({
-	footer: {
-		marginTop: 10,
-		marginBottom: 20,
-		gap: 10,
-	},
-	button: {
-		flex: 1,
-	},
-});
-
-export const RnDecafCrudForm: React.FC<RnDecafCrudFormProps> = ({ props, children, formProvider }) => {
+export const RnDecafCrudForm: React.FC<RnDecafCrudFormProps> = (formProps: RnDecafCrudFormProps) => {
+	const { children, formProvider } = formProps;
+	const styles = StyleSheet.create({
+		footer: { marginTop: 10, marginBottom: 20, gap: 10 },
+		button: { flex: 1 },
+	});
 	return (
 		<VStack space="md">
 			<form>{children}</form>

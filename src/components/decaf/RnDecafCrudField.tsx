@@ -1,5 +1,5 @@
 import React from "react";
-import { Control, Controller, FieldValues, useFormContext } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import {
 	FormControl,
 	FormControlError,
@@ -26,59 +26,11 @@ import {
 	SelectTrigger,
 } from "@components/ui/select";
 import { AlertCircleIcon, CheckIcon, ChevronDownIcon, CircleIcon, EyeIcon, EyeOffIcon } from "@components/ui/icon";
-import { CrudOperations, OperationKeys } from "@decaf-ts/db-decorators";
+import { OperationKeys } from "@decaf-ts/db-decorators";
 import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@components/ui/slider";
-import { ControlFieldProps } from "@/src/engine/types";
-import { RnFormService } from "@/src/engine/RnFormService";
+import { ControlFieldProps } from "@engine";
 
-type Option = {
-	text: string;
-	value: string;
-	disabled?: boolean;
-};
-
-type PossibleInputTypes =
-	| "text"
-	| "password"
-	| "number"
-	| "email"
-	| "tel"
-	| "date"
-	| "time"
-	| "textarea"
-	| "checkbox"
-	| "radio"
-	| "select"
-	| "range";
-
-export interface RnDecafCrudFieldProps {
-	operation?: CrudOperations;
-	name: string;
-	path: string;
-	childOf?: string;
-	type: string;
-	inputType?: PossibleInputTypes;
-	label?: string;
-	value?: any;
-	required?: boolean;
-	min?: number;
-	max?: number;
-	minlength?: number;
-	maxlength?: number;
-	readonly?: boolean;
-	placeholder?: string;
-	options?: Option[];
-	size?: "sm" | "md" | "lg";
-	space?: "sm" | "md" | "lg";
-	variant?: "underlined" | "outline" | "rounded";
-	mask?: string;
-	pattern?: string;
-	validateFn?: (value: any) => string | boolean;
-	control: Control<FieldValues, any, FieldValues>;
-	formProvider: RnFormService;
-}
-
-export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: RnDecafCrudFieldProps) => {
+export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: ControlFieldProps) => {
 	const {
 		operation = OperationKeys.CREATE,
 		type,
@@ -88,8 +40,8 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: Rn
 		required = false,
 		min,
 		max,
-		minlength,
-		maxlength,
+		minLength,
+		maxLength,
 		readonly = false,
 		placeholder,
 		options = [],
@@ -101,9 +53,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: Rn
 		...props
 	} = fieldProps;
 
-	// console.log("RnDecafCrudField: ", fieldProps, "->", formProvider);
-	const { control } = useFormContext();
-	// const { control } = formProvider.getMethods();
+	const { control } = formProvider.getMethods();
 
 	const fieldName = props.path;
 	const readonlyMode = [OperationKeys.READ, OperationKeys.DELETE].includes(operation);
@@ -140,7 +90,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: Rn
 										value={field.value}
 										onChangeText={field.onChange}
 										placeholder={placeholder}
-										maxLength={maxlength}
+										maxLength={maxLength}
 									/>
 								</Textarea>
 							</>
@@ -170,7 +120,13 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: Rn
 									<CheckboxGroup value={field.value || []} onChange={(keys) => field.onChange(keys)}>
 										<VStack space={space}>
 											{options.map((option) => (
-												<Checkbox key={option.value} size={size} value={option.value} isDisabled={option.disabled}>
+												<Checkbox
+													id={fieldProps.path + "." + option.value}
+													key={option.value}
+													size={size}
+													value={option.value}
+													isDisabled={option.disabled}
+												>
 													<CheckboxIndicator className="mr-2">
 														<CheckboxIcon as={CheckIcon} />
 													</CheckboxIndicator>
@@ -242,8 +198,8 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: Rn
 							<>
 								{renderLabel()}
 								<Slider
-									minValue={min || 0}
-									maxValue={max || 100}
+									minValue={(min as number) || 0}
+									maxValue={(max as number) || 100}
 									step={1}
 									value={field.value}
 									onChange={field.onChange}
@@ -268,7 +224,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: Rn
 										type={showPassword ? "text" : "password"}
 										value={field.value}
 										placeholder={placeholder}
-										maxLength={maxlength}
+										maxLength={maxLength}
 										onChangeText={field.onChange}
 									/>
 									<InputSlot className="pr-3" onPress={() => setShowPassword((prev) => !prev)}>
@@ -294,7 +250,7 @@ export const RnDecafCrudField: React.FC<RnDecafCrudFieldProps> = (fieldProps: Rn
 										keyboardType={type === "number" ? "numeric" : "default"}
 										value={field.value}
 										placeholder={placeholder}
-										maxLength={maxlength}
+										maxLength={maxLength}
 										onChangeText={field.onChange}
 										onBlur={field.onBlur}
 									/>

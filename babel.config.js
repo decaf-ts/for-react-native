@@ -4,8 +4,7 @@ const fs = require("fs");
 function resolveAlias(alias) {
 	const basePath = path.join(__dirname, "node_modules", alias);
 	const isSingleLib =
-		fs.existsSync(path.join(basePath, "package.json")) &&
-		fs.existsSync(path.join(basePath, "lib", "esm"));
+		fs.existsSync(path.join(basePath, "package.json")) && fs.existsSync(path.join(basePath, "lib", "esm"));
 
 	if (isSingleLib) {
 		return {
@@ -46,6 +45,7 @@ module.exports = function (api) {
 						"@components": "./src/components",
 						"@constants": "./src/constants",
 						"@hooks": "./src/hooks",
+						"@engine": "./src/engine",
 						"tailwind.config": "./tailwind.config.js",
 						...resolveAlias("typed-object-accumulator"),
 						...resolveAlias("@decaf-ts"),
