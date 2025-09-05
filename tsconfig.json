@@ -1,6 +1,7 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "ESNext",
     "module": "ESNext",
     "experimentalDecorators": true,
@@ -11,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "strictPropertyInitialization": true, // default true
     "skipLibCheck": true,
+    "noImplicitAny": false,
     "noImplicitReturns": false, // default true
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,

@@ -1,7 +1,7 @@
 import React from "react";
 import { Model } from "@decaf-ts/decorator-validation";
 import { FieldDefinition, RenderingEngine } from "@decaf-ts/ui-decorators";
-import { ComponentRegistry, ControlFieldProps, RnDecafCrudFieldProps, RnFormService } from "@engine";
+import { ComponentRegistry, ControlFieldProps, RnDecafCrudFieldProps, RnFormService } from "@/src/engine";
 import { FormProvider } from "react-hook-form";
 import { HStack } from "@components/ui/hstack";
 import { VStack } from "@components/ui/vstack";
@@ -101,8 +101,7 @@ export class RnRenderingEngine extends RenderingEngine {
 	 */
 	render<M extends Model>(model: M, globalProps: Record<string, unknown> = {}): any {
 		try {
-			const def = this.toFieldDefinition(model, globalProps);
-			console.log("toFieldDefinition=", def);
+			const def = this.toFieldDefinition(model, globalProps) as unknown as FieldDefinition<RnDecafCrudFieldProps>;
 			const RenderingForm = () => {
 				const component = this.fromFieldDefinition(def);
 				const form = RnFormService.get(def.rendererId!);

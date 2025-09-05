@@ -2,13 +2,10 @@ import "reflect-metadata";
 import { Center } from "@components/ui/center";
 import { Divider } from "@components/ui/divider";
 import { Heading } from "@components/ui/heading";
-import { ComponentRegistry, RnRenderingEngine } from "@engine";
-import { RnDecafCrudForm } from "@components/decaf/RnDecafCrudForm";
-import { RnDecafCrudField } from "@components/decaf/RnDecafCrudField";
+import { ComponentRegistry, RnRenderingEngine } from "@/src/engine";
+import { RnDecafCrudField, RnDecafCrudForm, RnFieldset } from "@/src/components";
 import { ScrollView } from "react-native";
-import { UserProfileModel } from "@/src/models/UserProfileModel";
-import { RnFieldset } from "@components/decaf/RnFieldset";
-import { ProfessionalInfoModel } from "@/src/models";
+import { ProfessionalInfoModel, UserProfileModel } from "@/src/models";
 
 const renderingEngine = new RnRenderingEngine();
 

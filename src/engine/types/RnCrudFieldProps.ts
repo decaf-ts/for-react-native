@@ -1,7 +1,8 @@
 import { Control, FieldValues } from "react-hook-form";
 import { FieldProperties } from "@decaf-ts/ui-decorators";
 import { OperationKeys } from "@decaf-ts/db-decorators";
-import type { RnFormService } from "@engine";
+import type { RnFormService } from "@engine/RnFormService";
+import { Validator } from "@/src/engine";
 
 export type Option = {
 	text: string;
@@ -26,6 +27,7 @@ export type PossibleInputTypes =
 export interface RnDecafCrudFieldProps extends FieldProperties {
 	label?: string;
 	// operation?: CrudOperations;
+	operation?: OperationKeys;
 	inputType?: PossibleInputTypes;
 	placeholder?: string;
 	options?: Option[];
@@ -35,8 +37,7 @@ export interface RnDecafCrudFieldProps extends FieldProperties {
 }
 
 export interface ControlFieldProps extends RnDecafCrudFieldProps {
-	operation?: OperationKeys;
 	formProvider: RnFormService;
-	validateFn?: (value: any) => string | boolean;
-	control: Control<FieldValues, any, FieldValues>;
+	validateFn?: Validator;
+	// control: Control<FieldValues, any, FieldValues>;
 }

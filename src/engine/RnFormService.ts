@@ -1,5 +1,5 @@
 import { FieldValues, useForm, UseFormReturn } from "react-hook-form";
-import { ControlFieldProps, PARENT_TOKEN, RnDecafCrudFieldProps, tokenizePath, ValidatorFactory } from "@engine";
+import { ControlFieldProps, PARENT_TOKEN, RnDecafCrudFieldProps, tokenizePath, ValidatorFactory } from "@/src/engine";
 import { escapeHtml, HTML5CheckTypes, HTML5InputTypes, parseToNumber } from "@decaf-ts/ui-decorators";
 
 /**
@@ -260,14 +260,11 @@ export class RnFormService {
 			return f.addFormControl(props);
 		}
 
-		const controlProps: Partial<ControlFieldProps> = {
-			formProvider: this,
-			control: this.formMethods.control,
-		};
+		const controlProps: Partial<ControlFieldProps> = { formProvider: this };
 		const validatorProps: ControlFieldProps = Object.assign({}, props, controlProps) as ControlFieldProps;
 
 		const validator = ValidatorFactory.validatorsFromProps(validatorProps);
-		const fieldProps = { ...validatorProps, validateFn: validator };
+		const fieldProps: ControlFieldProps = { ...validatorProps, validateFn: validator };
 
 		this.controls.set(name, fieldProps);
 		return fieldProps;

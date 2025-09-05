@@ -28,7 +28,7 @@ import {
 import { AlertCircleIcon, CheckIcon, ChevronDownIcon, CircleIcon, EyeIcon, EyeOffIcon } from "@components/ui/icon";
 import { OperationKeys } from "@decaf-ts/db-decorators";
 import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@components/ui/slider";
-import { ControlFieldProps } from "@engine";
+import { ControlFieldProps } from "@engine/types";
 
 export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: ControlFieldProps) => {
 	const {

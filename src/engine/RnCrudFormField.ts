@@ -109,7 +109,6 @@ export class RnCrudFormField implements FieldProperties {
 		return getValues(this.path);
 	}
 
-	// Exemplo para checar se o campo é válido via RHF (pode customizar)
 	isValid(formState: { errors: Record<string, any> }) {
 		return !formState.errors?.[this.path];
 	}

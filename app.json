@@ -1,4 +1,5 @@
 {
+  "name": "@decaf-ts/for-react-native",
   "expo": {
     "name": "@decaf-ts/for-react-native",
     "slug": "decaf-ts-for-react-native",

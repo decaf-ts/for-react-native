@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@components/ui/box";
 import { Text } from "@components/ui/text";
 import { StyleSheet, View } from "react-native";
-import type { RnFormService } from "@engine";
+import type { RnFormService } from "@engine/RnFormService";
 
 interface FieldsetProps {
 	name: string;
