@@ -11,7 +11,7 @@ import { ControlFieldProps, RnFormService, RnRenderingEngine } from "@/src/engin
 
 type ComparisonValidationKey = (typeof ComparisonValidationKeys)[keyof typeof ComparisonValidationKeys];
 
-export type Validator = (value: any) => { type: string; message: string } | undefined; // boolean | string | undefined;
+export type Validator = (value: any) => { key: string; message: string } | undefined; // boolean | string | undefined;
 
 export type ValidatorKeyProps = {
 	validatorKey: string;
@@ -133,7 +133,7 @@ export class ValidatorFactory {
 			const { validatorKey, props } = resolveValidatorKeyProps(key, fieldProps[key as keyof ControlFieldProps], type);
 
 			const validator = Validation.get(validatorKey);
-			if (!validator) return { type: key, message: `Unsupported validator: ${validatorKey}` };
+			if (!validator) return { key, message: `Unsupported validator: ${validatorKey}` };
 
 			const parsedValue =
 				typeof value !== "undefined"
@@ -154,7 +154,7 @@ export class ValidatorFactory {
 				console.warn(errs);
 			}
 
-			return errs ? { type: key, message: errs } : undefined;
+			return errs ? { key, message: errs } : undefined;
 		};
 
 		Object.defineProperty(validatorFn, "name", { value: `${key}Validator` });

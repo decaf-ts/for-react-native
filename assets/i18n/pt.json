@@ -1,0 +1,186 @@
+{
+  "languages": {
+    "en": "Inglês",
+    "pt": "Português"
+  },
+  "errors": {
+    "required": "Este campo é obrigatório.",
+    "pattern": "O valor fornecido não corresponde ao padrão.",
+    "min": "O valor mínimo para este campo é {0}.",
+    "max": "O valor máximo para este campo é {0}.",
+    "minlength": "O comprimento mínimo para este campo é {0}.",
+    "maxlength": "O comprimento máximo para este campo é {0}.",
+    "equal": "Este campo deve ser igual a {0}.",
+    "default": "Este valor parece ser inválido.",
+    "unique": "O campo {0} deve ser único.",
+    "password": "A palavra-passe deve ter pelo menos 8 caracteres e conter números, letras maiúsculas e minúsculas, e um caractere especial (@$!%*?&_-.,).",
+    "email": "Este campo deve conter um endereço de email válido.",
+    "url": "Este campo deve conter um URL válido.",
+    "number": "Este campo deve conter um número válido.",
+    "integer": "Este campo deve conter um número inteiro válido.",
+    "digits": "Este campo deve conter somente dígitos.",
+    "alphanum": "Este campo deve ser alfanumérico.",
+    "file": "Só são permitidos ficheiros do tipo {0}.",
+    "equals": "Este campo deve ser igual ao campo {0}.",
+    "different": "Este campo deve ser diferente do campo {0}.",
+    "lessThan": "Este campo deve ser menor que o campo {0}.",
+    "lessThanOrEqual": "Este campo deve ser menor ou igual ao campo {0}.",
+    "greaterThan": "Este campo deve ser maior que o campo {0}.",
+    "greaterThanOrEqual": "Este campo deve ser maior ou igual ao campo {0}."
+  },
+  "login": {
+    "username": {
+      "label": "Nome de utilizador",
+      "placeholder": "Digite o seu nome de utilizador"
+    },
+    "password": {
+      "label": "Palavra-passe",
+      "placeholder": "Digite a sua palavra-passe"
+    }
+  },
+  "user": {
+    "fullName": {
+      "label": "Nome Completo"
+    },
+    "legalName": {
+      "label": "Nome Legal"
+    },
+    "birthDate": {
+      "label": "Data de Nascimento"
+    },
+    "age": {
+      "label": "Idade"
+    },
+    "email": {
+      "label": "Email"
+    },
+    "password": {
+      "label": "Palavra-passe"
+    },
+    "phone": {
+      "label": "Telemóvel"
+    },
+    "gender": {
+      "label": "Género",
+      "options": {
+        "male": "Masculino",
+        "female": "Feminino"
+      }
+    },
+    "specialization": {
+      "label": "Especialização"
+    },
+    "acceptTerms": {
+      "label": "Aceito os Termos e Condições"
+    }
+  },
+  "address": {
+    "label": "Morada",
+    "street": {
+      "label": "Rua/Avenida",
+      "placeholder": "Rua/Avenida"
+    },
+    "number": {
+      "label": "Número"
+    },
+    "complement": {
+      "label": "Complemento"
+    },
+    "zipCode": {
+      "label": "Código Postal"
+    },
+    "city": {
+      "label": "Cidade"
+    },
+    "state": {
+      "label": "Distrito",
+      "options": {
+        "MH": "Maharashtra",
+        "BV": "Bavaria",
+        "QL": "Queensland"
+      }
+    }
+  },
+  "professionalInfo": {
+    "label": "Função",
+    "companyAddress": {
+      "label": "Sede"
+    },
+    "position": {
+      "label": "Cargo",
+      "options": {
+        "1": "Desenvolvedor",
+        "2": "Gestor",
+        "3": "Designer",
+        "0": "Outro"
+      }
+    },
+    "specialization": {
+      "label": "Especialização",
+      "options": {
+        "frontend": "Front-end",
+        "backend": "Back-end",
+        "fullstack": "Full-stack",
+        "mobile": "Mobile"
+      }
+    },
+    "company": {
+      "label": "Empresa"
+    },
+    "jobDescription": {
+      "label": "Descrição do Trabalho"
+    },
+    "availableToJobType": {
+      "label": "Disponível para Tipo de Trabalho",
+      "options": {
+        "fulltime": "Tempo Integral",
+        "parttime": "Meio Período"
+      }
+    }
+  },
+  "component": {
+    "list": {
+      "pagination": "A mostrar página <span class=\"text-bold\">{{value0}} de {{value1}}</span>",
+      "loading": "A carregar dados",
+      "search": {
+        "title": "Nenhum dado encontrado para a pesquisa",
+        "subtitle": "Procurou por: <ion-text color=\"primary\" class=\"display-block ion-text-center text-bold\">{{value0}}</ion-text>",
+        "button": "Limpar pesquisa"
+      },
+      "empty": {
+        "title": "Nenhum dado encontrado",
+        "subtitle": "",
+        "button": "Criar"
+      }
+    },
+    "list_item": {
+      "actions": "Ações",
+      "operations": {
+        "read": "Ler",
+        "create": "Criar",
+        "update": "Atualizar",
+        "delete": "Eliminar"
+      }
+    },
+    "empty_state": {
+      "title": "Nenhum dado encontrado",
+      "button": "Criar",
+      "search": {
+        "title": "Nenhum dado encontrado para a pesquisa",
+        "subtitle": "Procurou por: <ion-text color=\"primary\" class=\"display-block ion-text-center text-bold\">{{value0}}</ion-text>",
+        "button": "Limpar pesquisa"
+      }
+    },
+    "pagination": {
+      "resume": "A mostrar página <span class=\"text-bold\">{{value0}} de {{value1}}</span>"
+    },
+    "filter": {
+      "title": "Filtro",
+      "type": "Digite o valor",
+      "select": "Seleção do filtro",
+      "step1": "Selecione um índice",
+      "step2": "Selecione uma condição",
+      "step3": "Digite um valor"
+    }
+  }
+}

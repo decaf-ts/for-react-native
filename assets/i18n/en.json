@@ -1,0 +1,186 @@
+{
+  "languages": {
+    "en": "English",
+    "pt": "Portuguese"
+  },
+  "errors": {
+    "required": "This field is required.",
+    "pattern": "The provided value does not match the pattern.",
+    "min": "The minimum value for this field is {0}.",
+    "max": "The maximum value for this field is {0}.",
+    "minlength": "The minimum length for this field is {0}.",
+    "maxlength": "The maximum length for this field is {0}.",
+    "equal": "This field must be equal to {0}",
+    "default": "This value appears to be invalid.",
+    "unique": "Field {0} must be unique",
+    "password": "Password must be at least 8 characters and contain one of number, lower and upper case letters, and special character (@$!%*?&_-.,)",
+    "email": "This field must be a valid email address.",
+    "url": "This field must be a valid URL.",
+    "number": "This field must be a valid number.",
+    "integer": "This field must be a valid integer.",
+    "digits": "This field must contain only digits.",
+    "alphanum": "This field must be alphanumeric.",
+    "file": "Only {0} files are allowed",
+    "equals": "This field must be equal to field {0}",
+    "different": "This field must be different from field {0}",
+    "lessThan": "This field must be less than field {0}",
+    "lessThanOrEqual": "This field must be less than or equal to field {0}",
+    "greaterThan": "This field must be greater than field {0}",
+    "greaterThanOrEqual": "This field must be greater than or equal to field {0}"
+  },
+  "login": {
+    "username": {
+      "label": "Username",
+      "placeholder": "Type your username"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Type your password"
+    }
+  },
+  "user": {
+    "fullName": {
+      "label": "Full Name"
+    },
+    "legalName": {
+      "label": "Legal Name"
+    },
+    "birthDate": {
+      "label": "Birth Date"
+    },
+    "age": {
+      "label": "Age"
+    },
+    "email": {
+      "label": "Email"
+    },
+    "password": {
+      "label": "Password"
+    },
+    "phone": {
+      "label": "Phone"
+    },
+    "gender": {
+      "label": "Gender",
+      "options": {
+        "male": "Male",
+        "female": "Female"
+      }
+    },
+    "specialization": {
+      "label": "Specialization"
+    },
+    "acceptTerms": {
+      "label": "Accept Terms and Conditions"
+    }
+  },
+  "address": {
+    "label": "Address",
+    "street": {
+      "label": "Street/Avenue",
+      "placeholder": "Street/Avenue"
+    },
+    "number": {
+      "label": "Number"
+    },
+    "complement": {
+      "label": "Complement"
+    },
+    "zipCode": {
+      "label": "Zip Code"
+    },
+    "city": {
+      "label": "City"
+    },
+    "state": {
+      "label": "State",
+      "options": {
+        "MH": "Maharashtra",
+        "BV": "Bavaria",
+        "QL": "Queensland"
+      }
+    }
+  },
+  "professionalInfo": {
+    "label": "Professional Info",
+    "companyAddress": {
+      "label": "Headquarter Address"
+    },
+    "position": {
+      "label": "Position",
+      "options": {
+        "1": "Developer",
+        "2": "Manager",
+        "3": "Designer",
+        "0": "Other"
+      }
+    },
+    "specialization": {
+      "label": "Specialization",
+      "options": {
+        "frontend": "Front-end",
+        "backend": "Back-end",
+        "fullstack": "Full-stack",
+        "mobile": "Mobile"
+      }
+    },
+    "company": {
+      "label": "Company"
+    },
+    "jobDescription": {
+      "label": "Job Description"
+    },
+    "availableToJobType": {
+      "label": "Available for Job Type",
+      "options": {
+        "fulltime": "Full-time",
+        "parttime": "Part-time"
+      }
+    }
+  },
+  "component": {
+    "list": {
+      "pagination": "Showing page <span class=\"text-bold\">{{value0}} of {{value1}}</span>",
+      "loading": "Loading data",
+      "search": {
+        "title": "Not data found for search",
+        "subtitle": "You searched for: <ion-text color=\"primary\" class=\"display-block ion-text-center text-bold\">{{value0}}</ion-text>",
+        "button": "Clear search"
+      },
+      "empty": {
+        "title": "No data found",
+        "subtitle": "",
+        "button": "Create"
+      }
+    },
+    "list_item": {
+      "actions": "Actions",
+      "operations": {
+        "read": "Read",
+        "create": "Create",
+        "update": "Update",
+        "delete": "Delete"
+      }
+    },
+    "empty_state": {
+      "title": "No data found",
+      "button": "Create",
+      "search": {
+        "title": "Not data found for search",
+        "subtitle": "You searched for: <ion-text color=\"primary\" class=\"display-block ion-text-center text-bold\">{{value0}}</ion-text>",
+        "button": "Clear search"
+      }
+    },
+    "pagination": {
+      "resume": "Showing page <span class=\"text-bold\">{{value0}} of {{value1}}</span>"
+    },
+    "filter": {
+      "title": "Filter",
+      "type": "Type value",
+      "select": "Filter selection",
+      "step1": "Select an index",
+      "step2": "Select a condition",
+      "step3": "Type a value"
+    }
+  }
+}

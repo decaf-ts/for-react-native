@@ -79,7 +79,7 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 					if (!fieldProps.validateFn) return true;
 					const validationResult = fieldProps.validateFn(value);
 					if (validationResult?.message) {
-						return TranslateService.setContext("errors").get(validationResult.type);
+						return TranslateService.setContext("errors").get(validationResult.key);
 					}
 					return true;
 					// return fieldProps.validateFn ? fieldProps.validateFn(value) : true;
