@@ -29,13 +29,14 @@ import { AlertCircleIcon, CheckIcon, ChevronDownIcon, CircleIcon, EyeIcon, EyeOf
 import { OperationKeys } from "@decaf-ts/db-decorators";
 import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@components/ui/slider";
 import { ControlFieldProps } from "@engine/types";
+import { TranslateService, useTranslate } from "@/src/core/services";
 
 export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: ControlFieldProps) => {
 	const {
 		operation = OperationKeys.CREATE,
 		type,
 		inputType: originalInputType = "text",
-		label,
+		label = "",
 		value,
 		required = false,
 		min,
@@ -50,6 +51,7 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 		variant = "underlined",
 		// control,
 		formProvider,
+		// translatable,
 		...props
 	} = fieldProps;
 
@@ -63,7 +65,7 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 	const renderLabel = () =>
 		label && (
 			<FormControlLabel>
-				<FormControlLabelText aria-label={label}>{label}</FormControlLabelText>
+				<FormControlLabelText aria-label={label}>{useTranslate(label)}</FormControlLabelText>
 			</FormControlLabel>
 		);
 
@@ -74,7 +76,13 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 			defaultValue={value || ""}
 			rules={{
 				validate: (value: any) => {
-					return fieldProps.validateFn ? fieldProps.validateFn(value) : true;
+					if (!fieldProps.validateFn) return true;
+					const validationResult = fieldProps.validateFn(value);
+					if (validationResult?.message) {
+						return TranslateService.setContext("errors").get(validationResult.type);
+					}
+					return true;
+					// return fieldProps.validateFn ? fieldProps.validateFn(value) : true;
 				},
 			}}
 			render={({ field, fieldState }) => {
@@ -110,7 +118,7 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 									<CheckboxIndicator className="mr-2">
 										<CheckboxIcon as={CheckIcon} />
 									</CheckboxIndicator>
-									<CheckboxLabel>{label}</CheckboxLabel>
+									<CheckboxLabel>{useTranslate(label)}</CheckboxLabel>
 								</Checkbox>
 							);
 						} else {
@@ -130,7 +138,7 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 													<CheckboxIndicator className="mr-2">
 														<CheckboxIcon as={CheckIcon} />
 													</CheckboxIndicator>
-													<CheckboxLabel>{option.text}</CheckboxLabel>
+													<CheckboxLabel>{useTranslate(option.text)}</CheckboxLabel>
 												</Checkbox>
 											))}
 										</VStack>
@@ -151,7 +159,7 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 												<RadioIndicator>
 													<RadioIcon as={CircleIcon} />
 												</RadioIndicator>
-												<RadioLabel>{option.text}</RadioLabel>
+												<RadioLabel>{useTranslate(option.text)}</RadioLabel>
 											</Radio>
 										))}
 									</VStack>
@@ -161,13 +169,11 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 						break;
 
 					case "select":
+						const selectedOption = options.find((option) => option.value === value);
 						component = (
 							<>
 								{renderLabel()}
-								<Select
-									onValueChange={field.onChange}
-									selectedValue={options.find((option) => option.value === value)?.text}
-								>
+								<Select onValueChange={field.onChange} selectedValue={useTranslate(selectedOption?.text || "")}>
 									<SelectTrigger variant="outline" size={size}>
 										<SelectInput placeholder={placeholder || "Select option"} />
 										<SelectIcon as={ChevronDownIcon} />
@@ -181,7 +187,7 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 											{options.map((option) => (
 												<SelectItem
 													key={option.value}
-													label={option.text}
+													label={useTranslate(option.text)}
 													value={option.value}
 													isDisabled={option.disabled}
 												/>
@@ -261,7 +267,7 @@ export const RnDecafCrudField: React.FC<ControlFieldProps> = (fieldProps: Contro
 				}
 
 				return (
-					<VStack space={space}>
+					<VStack space="lg">
 						<FormControl isRequired={required} isDisabled={disabled} isInvalid={!!fieldState.error}>
 							{component}
 							<FormControlError>

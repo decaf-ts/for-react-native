@@ -3,14 +3,18 @@ import { Box } from "@components/ui/box";
 import { Text } from "@components/ui/text";
 import { StyleSheet, View } from "react-native";
 import type { RnFormService } from "@engine/RnFormService";
+import { useTranslate } from "@/src/core";
 
 interface FieldsetProps {
 	name: string;
+	childOf: string;
 	children: React.ReactNode;
 	formProvider: RnFormService;
 }
 
-export function RnFieldset({ name, children }: FieldsetProps) {
+export function RnFieldset(props: FieldsetProps) {
+	const { name, childOf, children } = props;
+	const label = childOf ? [childOf, "label"].join(".") : name;
 	const styles = StyleSheet.create({
 		wrapper: { marginTop: 20, position: "relative" },
 		legendContainer: {
@@ -41,7 +45,7 @@ export function RnFieldset({ name, children }: FieldsetProps) {
 		<View style={styles.wrapper}>
 			{/* Title*/}
 			<View style={styles.legendContainer}>
-				<Text style={styles.legend}>{name}</Text>
+				<Text style={styles.legend}>{useTranslate(label, name)}</Text>
 			</View>
 
 			<Box style={styles.fieldset}>

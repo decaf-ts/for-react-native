@@ -4,8 +4,13 @@ import { Divider } from "@components/ui/divider";
 import { Heading } from "@components/ui/heading";
 import { ComponentRegistry, RnRenderingEngine } from "@/src/engine";
 import { RnDecafCrudField, RnDecafCrudForm, RnFieldset } from "@/src/components";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { ProfessionalInfoModel, UserProfileModel } from "@/src/models";
+import { TranslateService } from "@/src/core/services";
+import { Button, ButtonText } from "@components/ui/button";
+import { HStack } from "@components/ui/hstack";
+import React from "react";
+import { LanguageSelector } from "@components/LanguageSelector";
 
 const renderingEngine = new RnRenderingEngine();
 
@@ -60,7 +65,12 @@ export default function Home() {
 		<ScrollView>
 			<Center>
 				<Heading>Example</Heading>
-				<Divider />
+				<HStack space="sm">
+					<LanguageSelector></LanguageSelector>
+				</HStack>
+
+				<Divider style={{ marginVertical: 16 }} />
+
 				{renderingEngine.render(model)}
 			</Center>
 		</ScrollView>

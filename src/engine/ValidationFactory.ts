@@ -11,7 +11,7 @@ import { ControlFieldProps, RnFormService, RnRenderingEngine } from "@/src/engin
 
 type ComparisonValidationKey = (typeof ComparisonValidationKeys)[keyof typeof ComparisonValidationKeys];
 
-export type Validator = (value: any) => boolean | string | undefined;
+export type Validator = (value: any) => { type: string; message: string } | undefined; // boolean | string | undefined;
 
 export type ValidatorKeyProps = {
 	validatorKey: string;
@@ -128,12 +128,12 @@ export class ValidatorFactory {
 			proxy = ValidatorFactory.createProxy(fieldProps.formProvider);
 		}
 
-		const validatorFn = (value: any) => {
+		const validatorFn: Validator = (value: any) => {
 			const { name, type } = fieldProps;
 			const { validatorKey, props } = resolveValidatorKeyProps(key, fieldProps[key as keyof ControlFieldProps], type);
 
 			const validator = Validation.get(validatorKey);
-			if (!validator) return `Unsupported validator: ${validatorKey}`;
+			if (!validator) return { type: key, message: `Unsupported validator: ${validatorKey}` };
 
 			const parsedValue =
 				typeof value !== "undefined"
@@ -146,7 +146,6 @@ export class ValidatorFactory {
 					const comparisonPropControl = (fieldProps.formProvider as RnFormService).getControl(
 						(fieldProps as any)[key]
 					) as ControlFieldProps;
-					console.log("Control=", comparisonPropControl);
 					additionalProps["label"] = comparisonPropControl?.label;
 				}
 				errs = validator.hasErrors(parsedValue, { ...props, ...additionalProps }, proxy);
@@ -155,7 +154,7 @@ export class ValidatorFactory {
 				console.warn(errs);
 			}
 
-			return errs ? errs : true;
+			return errs ? { type: key, message: errs } : undefined;
 		};
 
 		Object.defineProperty(validatorFn, "name", { value: `${key}Validator` });
@@ -174,9 +173,12 @@ export class ValidatorFactory {
 		return (value: any) => {
 			for (const validator of validators) {
 				const result = validator(value);
-				if (result) return result; // return first error
+				// return first error
+				if (result && result?.message) {
+					return result;
+				}
 			}
-			return true;
+			return undefined;
 		};
 	}
 

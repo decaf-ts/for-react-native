@@ -22,6 +22,12 @@ class TranslateServiceImpl implements ILocaleService {
 		return i18n.t(key);
 	}
 
+	setContext(ctx: string) {
+		return {
+			get: (key: string) => this.get(`${ctx}.${key}`),
+		};
+	}
+
 	async changeLanguage(lang: SupportedLocales) {
 		await i18n.changeLanguage(lang);
 	}
@@ -57,7 +63,7 @@ class TranslateServiceImpl implements ILocaleService {
 
 export const TranslateService = new TranslateServiceImpl();
 
-export function useTranslate(key: string) {
+export function useTranslate(key: string, fallback?: string) {
 	const [text, setText] = useState(() => TranslateService.get(key));
 
 	useEffect(() => {
@@ -69,5 +75,5 @@ export function useTranslate(key: string) {
 		return () => TranslateService.unsubscribe(update);
 	}, [key]);
 
-	return text;
+	return text || fallback || "";
 }
