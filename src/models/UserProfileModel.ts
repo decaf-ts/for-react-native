@@ -24,7 +24,7 @@ export class UserProfileModel extends Model {
 	@minlength(5)
 	@maxlength(36)
 	@uielement("ngx-decaf-crud-field", {
-		label: "Full Name",
+		label: "user.fullName.label",
 	})
 	fullName!: string;
 
@@ -33,21 +33,21 @@ export class UserProfileModel extends Model {
 	@maxlength(36)
 	@eq("./fullName", { label: "Full Name" })
 	@uielement("ngx-decaf-crud-field", {
-		label: "Legal Name",
+		label: "user.legalName.label",
 	})
 	legalName!: string;
 
 	@required()
 	@date("yyyy-MM-dd")
 	@uielement("ngx-decaf-crud-field", {
-		label: "Birth Date",
+		label: "user.birthDate.label",
 	})
 	birthDate!: Date;
 
 	@required()
 	@min(20)
 	@uielement("ngx-decaf-crud-field", {
-		label: "Age",
+		label: "user.age.label",
 		inputType: "range",
 	})
 	age!: number;
@@ -55,7 +55,7 @@ export class UserProfileModel extends Model {
 	@required()
 	@email()
 	@uielement("ngx-decaf-crud-field", {
-		label: "Email",
+		label: "user.email.label",
 		placeholder: "your@email.com",
 	})
 	email!: string;
@@ -63,7 +63,7 @@ export class UserProfileModel extends Model {
 	@required()
 	@password()
 	@uielement("ngx-decaf-crud-field", {
-		label: "Password",
+		label: "user.password.label",
 		inputType: "password",
 	})
 	password!: string;
@@ -71,17 +71,17 @@ export class UserProfileModel extends Model {
 	@required()
 	@pattern(/^\(\d{2}\) \d{4,5}-\d{4}$/)
 	@uielement("ngx-decaf-crud-field", {
-		label: "Phone",
+		label: "user.phone.label",
 	})
 	phone!: string;
 
 	@required()
 	@uielement("ngx-decaf-crud-field", {
-		label: "Gender",
+		label: "user.gender.label",
 		inputType: "radio",
 		options: [
-			{ value: "male", text: "Male" },
-			{ value: "female", text: "Female" },
+			{ value: "male", text: "user.gender.options.male" },
+			{ value: "female", text: "user.gender.options.female" },
 		],
 	})
 	gender!: string;
@@ -92,16 +92,16 @@ export class UserProfileModel extends Model {
 	@required()
 	@diff("professionalInfo.specialization")
 	@uielement("ngx-decaf-crud-field", {
-		label: "Specialization",
+		label: "user.specialization.label",
 	})
-	specialization?: string = "frontend";
+	specialization?: string = "Frontend";
 
 	@uichild(ProfessionalInfoModel.name, "ngx-decaf-fieldset")
 	professionalInfo!: ProfessionalInfoModel;
 
 	@required()
 	@uielement("ngx-decaf-crud-field", {
-		label: "Accept terms and conditions",
+		label: "user.acceptTerms.label",
 		inputType: "checkbox",
 	})
 	acceptTerms!: boolean;

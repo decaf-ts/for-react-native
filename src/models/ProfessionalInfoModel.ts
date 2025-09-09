@@ -1,5 +1,5 @@
 import { uichild, uielement, uimodel } from "@decaf-ts/ui-decorators";
-import { Model, model, required, diff } from "@decaf-ts/decorator-validation";
+import { diff, model, Model, required } from "@decaf-ts/decorator-validation";
 import { AddressModel } from "./AddressModel";
 
 @uimodel("ngx-decaf-crud-form")
@@ -7,13 +7,13 @@ import { AddressModel } from "./AddressModel";
 export class ProfessionalInfoModel extends Model {
 	@required()
 	@uielement("ngx-decaf-crud-field", {
-		label: "Position",
+		label: "professionalInfo.position.label",
 		inputType: "select",
 		options: [
-			{ value: 1, text: "Developer" },
-			{ value: 2, text: "Manager" },
-			{ value: 3, text: "Designer" },
-			{ value: 0, text: "Other" },
+			{ value: 1, text: "professionalInfo.position.options.1" },
+			{ value: 2, text: "professionalInfo.position.options.2" },
+			{ value: 3, text: "professionalInfo.position.options.3" },
+			{ value: 0, text: "professionalInfo.position.options.0" },
 		],
 	})
 	position!: number;
@@ -21,35 +21,35 @@ export class ProfessionalInfoModel extends Model {
 	@required()
 	@diff("../specialization")
 	@uielement("ngx-decaf-crud-field", {
-		label: "Specialization",
+		label: "professionalInfo.specialization.label",
 		inputType: "radio",
 		options: [
-			{ value: "frontend", text: "Front-end" },
-			{ value: "backend", text: "Back-end" },
-			{ value: "fullstack", text: "Full-stack" },
-			{ value: "mobile", text: "Mobile" },
+			{ value: "frontend", text: "professionalInfo.specialization.options.frontend" },
+			{ value: "backend", text: "professionalInfo.specialization.options.backend" },
+			{ value: "fullstack", text: "professionalInfo.specialization.options.fullstack" },
+			{ value: "mobile", text: "professionalInfo.specialization.options.mobile" },
 		],
 	})
 	specialization?: string;
 
 	@required()
 	@uielement("ngx-decaf-crud-field", {
-		label: "Company",
+		label: "professionalInfo.company.label",
 	})
 	company!: string;
 
 	@uielement("ngx-decaf-crud-field", {
-		label: "Job Description",
+		label: "professionalInfo.jobDescription.label",
 		inputType: "textarea",
 	})
 	jobDescription?: string;
 
 	@uielement("ngx-decaf-crud-field", {
-		label: "Available for",
+		label: "professionalInfo.availableToJobType.label",
 		inputType: "checkbox",
 		options: [
-			{ value: "fulltime", text: "Full-time" },
-			{ value: "parttime", text: "Part-time" },
+			{ value: "fulltime", text: "professionalInfo.availableToJobType.options.fulltime" },
+			{ value: "parttime", text: "professionalInfo.availableToJobType.options.parttime" },
 		],
 	})
 	availableToJobType?: string;

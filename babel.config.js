@@ -24,7 +24,6 @@ module.exports = function (api) {
 	api.cache(true);
 
 	return {
-		input: "./src/index.ts",
 		presets: [["babel-preset-expo", { jsxImportSource: "nativewind" }], "nativewind/babel"],
 		sourceMaps: true,
 		plugins: [
