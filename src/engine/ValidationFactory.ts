@@ -7,7 +7,9 @@ import {
 	ValidationKeys,
 } from "@decaf-ts/decorator-validation";
 import { HTML5InputTypes, parseValueByType } from "@decaf-ts/ui-decorators";
-import { ControlFieldProps, RnFormService, RnRenderingEngine } from "@/src/engine";
+import { ControlFieldProps } from "./types";
+import { RnRenderingEngine } from "./RnRenderingEngine";
+import { RnFormService } from "./RnFormService";
 
 type ComparisonValidationKey = (typeof ComparisonValidationKeys)[keyof typeof ComparisonValidationKeys];
 

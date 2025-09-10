@@ -1,11 +1,13 @@
 import React from "react";
 import { Model } from "@decaf-ts/decorator-validation";
 import { FieldDefinition, RenderingEngine } from "@decaf-ts/ui-decorators";
-import { ComponentRegistry, ControlFieldProps, RnDecafCrudFieldProps, RnFormService } from "@/src/engine";
+import { ComponentRegistry } from "./ComponentRegistry";
+import { ControlFieldProps, RnDecafCrudFieldProps } from "./types";
 import { FormProvider } from "react-hook-form";
 import { HStack } from "@components/ui/hstack";
 import { VStack } from "@components/ui/vstack";
 import { Heading } from "@components/ui/heading";
+import { RnFormService } from "./RnFormService";
 
 /**
  * @description Rendering engine specialized for React Native form components.
