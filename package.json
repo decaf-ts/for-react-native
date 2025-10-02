@@ -60,7 +60,7 @@
     "decaf",
     "decaf-ts"
   ],
-  "license": "AGPL-3.0-or-later",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/decaf-ts/for-react-native/issues"
   },
