@@ -4,7 +4,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "do-install": "TOKEN=$(cat .token) npm install",
+    "do-install": "NPM_TOKEN=$(cat .npmtoken) npm install",
     "start": "DARK_MODE=media expo start --clear",
     "start:android": "npm run start -- --android",
     "start:ios": "npm run start -- --ios",
