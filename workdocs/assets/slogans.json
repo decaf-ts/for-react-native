@@ -1,54 +1,198 @@
 [
-	{
-		"Slogan": "Decaf-TS for React Native: mobile dev without the caffeine jitters.",
-		"Tags": "React Native, Mobile, Coffee-themed"
-	},
-	{ "Slogan": "Build beautifully, run smoothly, stay decaf.", "Tags": "Mobile, Calm, Developer" },
-	{ "Slogan": "Native apps, decaffeinated stack.", "Tags": "React Native, Coffee-themed, Technical" },
-	{ "Slogan": "Let your UI breathe. Let your code chill.", "Tags": "UI, Calm, Mobile" },
-	{ "Slogan": "Cross-platform without cross-surges in your heartbeat.", "Tags": "CrossPlatform, Calm, Developer" },
-	{ "Slogan": "React Native adapter that sips, not slams.", "Tags": "Adapter, Coffee-themed, Mobile" },
-	{ "Slogan": "Use your phone. Not your adrenaline rush.", "Tags": "Mobile, Humor, Calm" },
-	{ "Slogan": "From iOS to Android with one calm stack.", "Tags": "Mobile, Fullstack, Calm" },
-	{ "Slogan": "Install. Code. Sip decaf. Deploy mobile.", "Tags": "Workflow, Coffee-themed, Mobile" },
-	{ "Slogan": "Your mobile code’s hammock — lightweight, relaxed, powerful.", "Tags": "Metaphor, Mobile, Chill" },
-	{ "Slogan": "React Native just got a calm infusion.", "Tags": "React Native, Infusion, Coffee-themed" },
-	{ "Slogan": "Shake your phone, not your mental state.", "Tags": "Mobile, Humor, Calm" },
-	{ "Slogan": "App development that doesn’t spike your cortisol.", "Tags": "Mobile, Chill, Wellness" },
-	{ "Slogan": "Because your code should run — not run away screaming.", "Tags": "Mobile, Humor, Developer" },
-	{ "Slogan": "Fast reload. Slower heart rate.", "Tags": "React Native, Calm, Speed" },
-	{ "Slogan": "Decaf your development. Boost your UX.", "Tags": "React Native, UX, Calm" },
-	{ "Slogan": "Deploy with the serenity of a yoga instructor.", "Tags": "Mobile, Humor, Calm" },
-	{ "Slogan": "From coffee-fueled to calm-fueled mobile workflows.", "Tags": "Coffee-themed, Mobile, Workflow" },
-	{ "Slogan": "A mobile stack your nervous system approves of.", "Tags": "Calm, Tech, Mobile" },
-	{ "Slogan": "Decaf-TS RN: Runs smooth. Feels smooth. Is smooth.", "Tags": "Mobile, Coffee-themed, Fun" },
-	{ "Slogan": "For devs who want to build apps, not anxiety.", "Tags": "Mental Health, Humor, Mobile" },
-	{ "Slogan": "React Native without the React panic.", "Tags": "React Native, Humor, Calm" },
-	{ "Slogan": "Tap. Swipe. Sip. Ship.", "Tags": "Mobile, Minimal, Coffee-themed" },
-	{ "Slogan": "Ditch the crash reports. Embrace the nap reports.", "Tags": "Humor, Mobile, Stability" },
-	{ "Slogan": "Mobile dev. Now with 90% less debugging rage.", "Tags": "Developer, Mobile, Humor" },
-	{ "Slogan": "Smoother animations. Smoother nervous system.", "Tags": "UX, Calm, Mobile" },
-	{ "Slogan": "Skip the lags. Skip the lattes.", "Tags": "Performance, Coffee-themed, Humor" },
-	{ "Slogan": "Cross-platform coolness without the chaos.", "Tags": "Chill, Calm, Mobile" },
-	{ "Slogan": "The stack that makes hot reload feel like spa day.", "Tags": "Developer, Calm, Metaphor" },
-	{ "Slogan": "No bugs. No buzz. Just balance.", "Tags": "Mobile, Calm, Developer" },
-	{ "Slogan": "Native performance with barista-level smoothness.", "Tags": "Performance, Coffee-themed, Mobile" },
-	{ "Slogan": "Write once. Chill everywhere.", "Tags": "Cross-platform, Calm, Mobile" },
-	{ "Slogan": "Decaf for React Native: Code like it's Sunday morning.", "Tags": "Calm, Mobile, Coffee-themed" },
-	{ "Slogan": "From code to coast mode.", "Tags": "Metaphor, Chill, Mobile" },
-	{ "Slogan": "Brew native apps without burning your dev hours.", "Tags": "Mobile, Coffee-themed, Productivity" },
-	{ "Slogan": "The only stack that pairs well with herbal tea.", "Tags": "Mobile, Humor, Wellness" },
-	{ "Slogan": "One stack. Infinite chill.", "Tags": "Mobile, Calm, Tech" },
-	{ "Slogan": "Install Decaf-TS RN. Uninstall stress.", "Tags": "Mobile, Workflow, Calm" },
-	{ "Slogan": "Less caffeine. More features.", "Tags": "Mobile, Coffee-themed, Calm" },
-	{ "Slogan": "React Native... without the React nightmares.", "Tags": "Mobile, Humor, Sleep" },
-	{ "Slogan": "Hot reloading. Cold brew energy.", "Tags": "Mobile, Coffee-themed, Developer" },
-	{ "Slogan": "Make mobile apps, not heart palpitations.", "Tags": "Humor, Calm, Developer" },
-	{ "Slogan": "UI that flows like a slow-poured latte.", "Tags": "Mobile, Coffee-themed, UI" },
-	{ "Slogan": "Push updates, not your stress threshold.", "Tags": "Mobile, Humor, Productivity" },
-	{ "Slogan": "Code in calm. Compile in confidence.", "Tags": "Mobile, Calm, Developer" },
-	{ "Slogan": "React Native. Refactored for restfulness.", "Tags": "Mobile, Tech, Calm" },
-	{ "Slogan": "No state management meltdowns.", "Tags": "Mobile, Humor, Chill" },
-	{ "Slogan": "Crashes belong in test flights. Not production.", "Tags": "Mobile, Developer, Reliability" },
-	{ "Slogan": "Go native. Stay mellow.", "Tags": "Mobile, Calm, React Native" }
+  {
+    "Slogan": "Decaf-TS for React Native: mobile dev without the caffeine jitters.",
+    "Tags": "React Native, Mobile, Coffee-themed"
+  },
+  {
+    "Slogan": "Build beautifully, run smoothly, stay decaf.",
+    "Tags": "Mobile, Calm, Developer"
+  },
+  {
+    "Slogan": "Native apps, decaffeinated stack.",
+    "Tags": "React Native, Coffee-themed, Technical"
+  },
+  {
+    "Slogan": "Let your UI breathe. Let your code chill.",
+    "Tags": "UI, Calm, Mobile"
+  },
+  {
+    "Slogan": "Cross-platform without cross-surges in your heartbeat.",
+    "Tags": "CrossPlatform, Calm, Developer"
+  },
+  {
+    "Slogan": "React Native adapter that sips, not slams.",
+    "Tags": "Adapter, Coffee-themed, Mobile"
+  },
+  {
+    "Slogan": "Use your phone. Not your adrenaline rush.",
+    "Tags": "Mobile, Humor, Calm"
+  },
+  {
+    "Slogan": "From iOS to Android with one calm stack.",
+    "Tags": "Mobile, Fullstack, Calm"
+  },
+  {
+    "Slogan": "Install. Code. Sip decaf. Deploy mobile.",
+    "Tags": "Workflow, Coffee-themed, Mobile"
+  },
+  {
+    "Slogan": "Your mobile code’s hammock — lightweight, relaxed, powerful.",
+    "Tags": "Metaphor, Mobile, Chill"
+  },
+  {
+    "Slogan": "React Native just got a calm infusion.",
+    "Tags": "React Native, Infusion, Coffee-themed"
+  },
+  {
+    "Slogan": "Shake your phone, not your mental state.",
+    "Tags": "Mobile, Humor, Calm"
+  },
+  {
+    "Slogan": "App development that doesn’t spike your cortisol.",
+    "Tags": "Mobile, Chill, Wellness"
+  },
+  {
+    "Slogan": "Because your code should run — not run away screaming.",
+    "Tags": "Mobile, Humor, Developer"
+  },
+  {
+    "Slogan": "Fast reload. Slower heart rate.",
+    "Tags": "React Native, Calm, Speed"
+  },
+  {
+    "Slogan": "Decaf your development. Boost your UX.",
+    "Tags": "React Native, UX, Calm"
+  },
+  {
+    "Slogan": "Deploy with the serenity of a yoga instructor.",
+    "Tags": "Mobile, Humor, Calm"
+  },
+  {
+    "Slogan": "From coffee-fueled to calm-fueled mobile workflows.",
+    "Tags": "Coffee-themed, Mobile, Workflow"
+  },
+  {
+    "Slogan": "A mobile stack your nervous system approves of.",
+    "Tags": "Calm, Tech, Mobile"
+  },
+  {
+    "Slogan": "Decaf-TS RN: Runs smooth. Feels smooth. Is smooth.",
+    "Tags": "Mobile, Coffee-themed, Fun"
+  },
+  {
+    "Slogan": "For devs who want to build apps, not anxiety.",
+    "Tags": "Mental Health, Humor, Mobile"
+  },
+  {
+    "Slogan": "React Native without the React panic.",
+    "Tags": "React Native, Humor, Calm"
+  },
+  {
+    "Slogan": "Tap. Swipe. Sip. Ship.",
+    "Tags": "Mobile, Minimal, Coffee-themed"
+  },
+  {
+    "Slogan": "Ditch the crash reports. Embrace the nap reports.",
+    "Tags": "Humor, Mobile, Stability"
+  },
+  {
+    "Slogan": "Mobile dev. Now with 90% less debugging rage.",
+    "Tags": "Developer, Mobile, Humor"
+  },
+  {
+    "Slogan": "Smoother animations. Smoother nervous system.",
+    "Tags": "UX, Calm, Mobile"
+  },
+  {
+    "Slogan": "Skip the lags. Skip the lattes.",
+    "Tags": "Performance, Coffee-themed, Humor"
+  },
+  {
+    "Slogan": "Cross-platform coolness without the chaos.",
+    "Tags": "Chill, Calm, Mobile"
+  },
+  {
+    "Slogan": "The stack that makes hot reload feel like spa day.",
+    "Tags": "Developer, Calm, Metaphor"
+  },
+  {
+    "Slogan": "No bugs. No buzz. Just balance.",
+    "Tags": "Mobile, Calm, Developer"
+  },
+  {
+    "Slogan": "Native performance with barista-level smoothness.",
+    "Tags": "Performance, Coffee-themed, Mobile"
+  },
+  {
+    "Slogan": "Write once. Chill everywhere.",
+    "Tags": "Cross-platform, Calm, Mobile"
+  },
+  {
+    "Slogan": "Decaf for React Native: Code like it's Sunday morning.",
+    "Tags": "Calm, Mobile, Coffee-themed"
+  },
+  {
+    "Slogan": "From code to coast mode.",
+    "Tags": "Metaphor, Chill, Mobile"
+  },
+  {
+    "Slogan": "Brew native apps without burning your dev hours.",
+    "Tags": "Mobile, Coffee-themed, Productivity"
+  },
+  {
+    "Slogan": "The only stack that pairs well with herbal tea.",
+    "Tags": "Mobile, Humor, Wellness"
+  },
+  {
+    "Slogan": "One stack. Infinite chill.",
+    "Tags": "Mobile, Calm, Tech"
+  },
+  {
+    "Slogan": "Install Decaf-TS RN. Uninstall stress.",
+    "Tags": "Mobile, Workflow, Calm"
+  },
+  {
+    "Slogan": "Less caffeine. More features.",
+    "Tags": "Mobile, Coffee-themed, Calm"
+  },
+  {
+    "Slogan": "React Native... without the React nightmares.",
+    "Tags": "Mobile, Humor, Sleep"
+  },
+  {
+    "Slogan": "Hot reloading. Cold brew energy.",
+    "Tags": "Mobile, Coffee-themed, Developer"
+  },
+  {
+    "Slogan": "Make mobile apps, not heart palpitations.",
+    "Tags": "Humor, Calm, Developer"
+  },
+  {
+    "Slogan": "UI that flows like a slow-poured latte.",
+    "Tags": "Mobile, Coffee-themed, UI"
+  },
+  {
+    "Slogan": "Push updates, not your stress threshold.",
+    "Tags": "Mobile, Humor, Productivity"
+  },
+  {
+    "Slogan": "Code in calm. Compile in confidence.",
+    "Tags": "Mobile, Calm, Developer"
+  },
+  {
+    "Slogan": "React Native. Refactored for restfulness.",
+    "Tags": "Mobile, Tech, Calm"
+  },
+  {
+    "Slogan": "No state management meltdowns.",
+    "Tags": "Mobile, Humor, Chill"
+  },
+  {
+    "Slogan": "Crashes belong in test flights. Not production.",
+    "Tags": "Mobile, Developer, Reliability"
+  },
+  {
+    "Slogan": "Go native. Stay mellow.",
+    "Tags": "Mobile, Calm, React Native"
+  }
 ]
